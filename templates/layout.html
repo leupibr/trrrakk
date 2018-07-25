@@ -1,14 +1,24 @@
 <!DOCTYPE html>
+{% load static %}
+{% load cookielaw_tags %}
+{% load bootstrap4 %}
 <html>
 <head>
-    {% load static %}
-    {% load cookielaw_tags %}
-    <script src="{% static 'cookielaw/js/cookielaw.js' %}"></script>
+    <meta charset="utf-8">
+
     <title>Trrrakk</title>
+
+    {% bootstrap_css %}
     <link rel="stylesheet" type="text/css" href="{% static 'cookielaw/css/cookielaw.css' %}" />
+
+    <script src="{% static 'cookielaw/js/cookielaw.js' %}"></script>
+    {% bootstrap_javascript jquery='full' %}
 </head>
 <body>
     {% cookielaw_banner %}
+    {% bootstrap_messages %}
+
     {% block content %}{% endblock %}
+
 </body>
 </html>

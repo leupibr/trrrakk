@@ -1,0 +1,13 @@
+{% load i18n static %}
+
+<div id="CookielawBanner" class="container-fluid fixed-bottom">
+    <div class="container" id="cookie_accept">
+        <div class="float-right">
+            <a class="btn btn-sm btn-outline-info" href="{% url 'cookie-policy' %}">{% trans "What are cookies?" %}</a>
+            <a class="btn btn-sm btn-primary" href="javascript:Cookielaw.createCookielawCookie();">{% trans "Accept" %}</a>
+        </div>
+        <p class="text-muted">
+            {% trans 'This website uses cookies &#x1F36A; to make your experience better.' %}
+        </p>
+    </div>
+</div>

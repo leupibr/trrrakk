@@ -8,6 +8,7 @@ django = "*"
 coverage = "*"
 social-auth-app-django = "*"
 django-cookie-law = "*"
+"django-bootstrap4" = "*"
 
 [dev-packages]
 
