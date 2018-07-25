@@ -13,6 +13,7 @@
     {% bootstrap_css %}
     {% fontawesome_stylesheet %}
     <link rel="stylesheet" type="text/css" href="{% static 'cookielaw/css/cookielaw.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}" />
 
     <script src="{% static 'cookielaw/js/cookielaw.js' %}"></script>
     {% bootstrap_javascript jquery='full' %}
@@ -20,6 +21,7 @@
 <body>
     {% cookielaw_banner %}
     {% bootstrap_messages %}
+    {% include "navigation.html" %}
 
     {% block content %}{% endblock %}
 
