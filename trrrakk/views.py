@@ -13,5 +13,5 @@ def logout(request):
 
 
 def cookie_policy(request):
-    return HttpResponse("Cookie Information")
+    return render(request, 'cookielaw/policy.html')
 
