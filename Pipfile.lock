@@ -1,7 +1,7 @@
 {
     "_meta": {
         "hash": {
-            "sha256": "efa7327e42bef24172220e2c9560451ae1914c5a4c00b50eb41ff24021cd20b1"
+            "sha256": "d484d5a6418f75db1c7f4019444c9c1f1601ca3b61211f125976c3bc315f918a"
         },
         "pipfile-spec": 6,
         "requires": {
@@ -83,6 +83,20 @@
             "index": "pypi",
             "version": "==2.0.7"
         },
+        "django-classy-tags": {
+            "hashes": [
+                "sha256:792f9161d0e22d55b4fab6fc297bab8ab072ffaa3075b227613a6d8473624db8",
+                "sha256:f6d12f5a4df3e387795a0d9ef2836af389cae9a1fbebda035dac043d4722b1f7"
+            ],
+            "version": "==0.8.0"
+        },
+        "django-cookie-law": {
+            "hashes": [
+                "sha256:cb8500c5db6285e31fd2ce224eadcda9834e79fe39031fc79e69371fe4f9ad7b"
+            ],
+            "index": "pypi",
+            "version": "==2.0.1"
+        },
         "idna": {
             "hashes": [
                 "sha256:156a6814fb5ac1fc6850fb002e0852d56c0c8d2531923a51032d1b70760e186e",
@@ -103,6 +117,14 @@
                 "sha256:4ee413b357d53fd3fb44704577afac88e72e878716116270d722723d65b42176"
             ],
             "version": "==1.6.4"
+        },
+        "pytest-runner": {
+            "hashes": [
+                "sha256:d23f117be39919f00dd91bffeb4f15e031ec797501b717a245e377aee0f577be",
+                "sha256:d987fec1e31287592ffe1cb823a8c613c533db4c6aaca0ee1191dbc91e2fcc61"
+            ],
+            "markers": "python_version >= '2.7' and python_version != '3.0' and python_version != '3.1'",
+            "version": "==4.2"
         },
         "python3-openid": {
             "hashes": [

@@ -21,6 +21,7 @@ from trrrakk import views
 urlpatterns = [
     path('', include('tracker.urls'), name='tracker'),
     path('admin/', admin.site.urls),
+    path('cookie-policy/', views.cookie_policy, name='cookie-policy'),
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
     path('auth/', include('social_django.urls', namespace='social'))

@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['trrrakk.io', 'localhost']
 
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'static')
+]
 
 # Application definition
 
@@ -39,6 +42,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'social_django',
+    'cookielaw',
 ]
 
 MIDDLEWARE = [
@@ -120,7 +124,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.social_details',
     'social_core.pipeline.social_auth.social_uid',
     'social_core.pipeline.social_auth.social_user',
-    #'social_core.pipeline.user.get_username',
+    'social_core.pipeline.user.get_username',
     'social_core.pipeline.user.create_user',
     'social_core.pipeline.social_auth.associate_user',
     'social_core.pipeline.social_auth.load_extra_data',

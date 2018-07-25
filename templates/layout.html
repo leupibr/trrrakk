@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+    {% load static %}
+    {% load cookielaw_tags %}
+    <script src="{% static 'cookielaw/js/cookielaw.js' %}"></script>
+    <title>Trrrakk</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'cookielaw/css/cookielaw.css' %}" />
+</head>
+<body>
+    {% cookielaw_banner %}
+    {% block content %}{% endblock %}
+</body>
+</html>
