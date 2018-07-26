@@ -15,8 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.conf.urls.static import static
 
-from trrrakk import views
+from trrrakk import views, settings
 
 urlpatterns = [
     path('', include('tracker.urls'), name='tracker'),
@@ -25,4 +26,4 @@ urlpatterns = [
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
     path('auth/', include('social_django.urls', namespace='social'))
-]
+] + static(settings.MEDIA_URL, document_root = settings.MEDIA_ROOT)

@@ -133,6 +133,7 @@ SOCIAL_AUTH_PIPELINE = (
     'social_core.pipeline.social_auth.load_extra_data',
     'social_core.pipeline.user.user_details',
     'social_core.pipeline.social_auth.associate_by_email',
+    'trrrakk.pipeline.get_avatar',
 )
 
 # Internationalization
@@ -148,3 +149,5 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 STATIC_URL = '/static/'
+MEDIA_ROOT = 'trrrakk/media/'
+MEDIA_URL = '/trrrakk/media/'

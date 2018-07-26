@@ -1,6 +1,7 @@
 import datetime
 
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 from django.db import models
 
 
@@ -44,4 +45,9 @@ class TimeRecord(models.Model):
 
 class Settings(models.Model):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+
+
+class Profile(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, null=False)
+    avatar = models.ImageField(null=True)
 
