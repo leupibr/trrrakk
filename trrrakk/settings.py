@@ -42,9 +42,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'social_django',
+    'analytical',
     'cookielaw',
     'bootstrap4',
-    'fontawesome'
+    'fontawesome',
 ]
 
 MIDDLEWARE = [
@@ -120,6 +121,8 @@ AUTHENTICATION_BACKENDS = (
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = '/'
+
+GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-122921683-1'
 
 SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = '1097840472481-mifa51assms29bl1pa2kr1nusbbpmnm8.apps.googleusercontent.com'
 SOCIAL_AUTH_PIPELINE = (
