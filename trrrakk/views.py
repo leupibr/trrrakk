@@ -4,7 +4,7 @@ from django.contrib.auth import logout as auth_logout
 
 
 def login(request):
-    return render(request, 'registration/login.html')
+    return render(request, 'trrrakk/login.html')
 
 
 def logout(request):
@@ -13,5 +13,5 @@ def logout(request):
 
 
 def cookie_policy(request):
-    return render(request, 'cookielaw/policy.html')
+    return render(request, 'trrrakk/policy.html')
 

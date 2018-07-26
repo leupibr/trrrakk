@@ -28,7 +28,7 @@ DEBUG = True
 ALLOWED_HOSTS = ['trrrakk.io', 'localhost']
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static')
+    os.path.join(BASE_DIR, 'trrrakk/static')
 ]
 
 # Application definition
@@ -63,7 +63,7 @@ ROOT_URLCONF = 'trrrakk.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'trrrakk/templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
