@@ -1,9 +1,7 @@
 {% extends "trrrakk/layout.html" %}
 
 {% block content %}
-	{% if user.is_authenticated %}
-             <p class="display-4">Hello, {{ user.first_name }}</p>
-	{% else %}
-             <a class="lead" href="{% url 'login' %}">Log in</a>
-	{% endif %}
+    {% if not recent_projects %}
+        {% include 'tracker/index.no_projects.html' %}
+    {% endif %}
 {% endblock content %}

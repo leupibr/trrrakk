@@ -1,0 +1,17 @@
+<section>
+    <div class="startpage text-center d-flex">
+        <div class="container my-auto">
+            <div class="row">
+                <div class="col-lg-10 mx-auto">
+                    <h1 class="text-uppercase"><strong>No projects yet?</strong></h1>
+                    <h1 class="text-uppercase"><strong>Create one!</strong></h1>
+                    <hr>
+                </div>
+                <div class="col-lg-8 mx-auto">
+                    <p class="text-muted mb-5">Add your first project and start <i>trrracking</i> your working hours.</p>
+                    <a class="btn btn-primary btn-xl js-scroll-trigger" href="{% url 'tracker:projects' '~'|add:user.username %}">To the projects</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

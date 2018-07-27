@@ -13,4 +13,13 @@
     position: relative;
     z-index: 998; }
 
+.startpage {
+  height: calc(100vh - 56px);
+  padding-top: 0;
+  padding-bottom: 0; }
+  .startpage hr {
+    max-width: 50px;
+    border-color: #C0C0C0;
+    border-width: 3px; }
+
 /*# sourceMappingURL=style.css.map */

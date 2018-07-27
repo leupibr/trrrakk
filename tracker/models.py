@@ -14,6 +14,12 @@ class Organization(models.Model):
         return self.name.startswith('~')
     is_user_space.boolean = True
 
+    def is_admin(self, user):
+        return user in self.admins.all()
+
+    def is_member(self, user):
+        pass
+
     def __str__(self):
         return self.name
 
