@@ -13,7 +13,10 @@ def index(request):
 def projects(request, organization, **kwargs):
     organization = Organization.get_or_create_by_name(name=organization, user=request.user)
 
-    context = dict(organization=organization, **kwargs)
+    context = dict(
+        organization=organization,
+        random_project_name=Project.random_name(),
+        **kwargs)
     return render(request, 'tracker/projects.html', context)
 
 
@@ -36,4 +39,4 @@ def project_create(request, organization):
     project.save()
 
     kwargs = dict(organization=organization)
-    return HttpResponseRedirect(reverse('tracker:projects', kwargs=kwargs))  # , args=(question.id,)))
+    return HttpResponseRedirect(reverse('tracker:projects', kwargs=kwargs))
