@@ -1,4 +1,4 @@
-from django.http import HttpResponseRedirect, HttpResponseForbidden
+from django.http import HttpResponseRedirect, HttpResponseForbidden, Http404
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 
@@ -11,7 +11,7 @@ def index(request):
 
 
 def projects(request, organization, **kwargs):
-    organization = get_object_or_404(Organization, name=organization)
+    organization = Organization.get_or_create_by_name(name=organization, user=request.user)
 
     context = dict(organization=organization, **kwargs)
     return render(request, 'tracker/projects.html', context)

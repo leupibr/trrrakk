@@ -1,6 +1,9 @@
 from django.contrib import admin
 
-from tracker.models import Organization, Project, TimeRecord, Profile
+from tracker.models import Organization
+from tracker.models import Project
+from tracker.models import Profile
+from tracker.models import TimeRecord
 
 
 class OrganizationAdmin(admin.ModelAdmin):
@@ -29,5 +32,4 @@ class TimeRecordAdmin(admin.ModelAdmin):
 admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(TimeRecord, TimeRecordAdmin)
-
 admin.site.register(Profile)

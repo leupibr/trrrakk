@@ -1,6 +1,7 @@
 from django.test import TestCase
 
-from tracker.models import Organization, TimeRecord
+from tracker.models import Organization
+from tracker.models import TimeRecord
 from datetime import datetime, timedelta
 
 
