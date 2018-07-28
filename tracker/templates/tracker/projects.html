@@ -8,8 +8,26 @@
     <div class="text-center">
         {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-        <div class="row justify-content-md-center">
-            {% render_table projects %}
+        <div class="card-columns">
+            {% for project in projects.all %}
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ project.name }}</h5>
+                    <div class="row">
+                        <div class="col-6 text-left">
+                            <a href="#" class="card-link"><i class="fa fa-bar-chart"></i></a>
+                            <a href="#" class="card-link"><i class="fa fa-clock-o"></i></a>
+                        </div>
+
+                        <div class="col-6 text-right">
+                            <a href="#" class="card-link"><i class="fa fa-plus-circle"></i></a>
+                            <a href="#" class="card-link"><i class="fa fa-play-circle text-success"></i></a>
+                            <a href="#" class="card-link"><i class="fa fa-stop-circle text-danger"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
         </div>
 
 
