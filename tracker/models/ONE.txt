@@ -11,6 +11,7 @@ Ocean
 Snowstorm
 Storm
 Tempest
+Thunder
 Thunderstorm
 Tornado
 Twister

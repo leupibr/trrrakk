@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'social_django',
+    'django_tables2',
     'analytical',
     'cookielaw',
     'bootstrap4',

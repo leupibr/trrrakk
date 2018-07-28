@@ -1,5 +1,5 @@
 from django.http import HttpResponseRedirect, HttpResponseForbidden, Http404
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
 
 from tracker.models import Organization, Project
@@ -15,6 +15,7 @@ def projects(request, organization, **kwargs):
 
     context = dict(
         organization=organization,
+        projects=Project.objects.filter(admins__in=[request.user]),
         random_project_name=Project.random_name(),
         **kwargs)
     return render(request, 'tracker/projects.html', context)
@@ -28,15 +29,14 @@ def project_create(request, organization):
 
     try:
         project_name = request.POST['project_name']
+        if not project_name.strip():
+            raise KeyError()
     except KeyError:
-        return HttpResponseRedirect(
-            reverse('tracker:projects', dict(organization=organization),
-                    dict(error_message="You didn't enter a project name."), ))
+        return projects(request, organization=organization.name, error_message="You didn't enter a project name.")
 
     project = Project(name=project_name, organization=organization)
     project.save()
     project.admins.add(request.user)
     project.save()
 
-    kwargs = dict(organization=organization)
-    return HttpResponseRedirect(reverse('tracker:projects', kwargs=kwargs))
+    return redirect('tracker:projects', organization=organization)
