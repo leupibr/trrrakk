@@ -15,7 +15,7 @@ def projects(request, organization, **kwargs):
 
     context = dict(
         organization=organization,
-        projects=Project.objects.filter(admins__in=[request.user]),
+        projects=Project.objects.filter(organization=organization, admins__in=[request.user]),
         random_project_name=Project.random_name(),
         **kwargs)
     return render(request, 'tracker/projects.html', context)
