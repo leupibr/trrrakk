@@ -1,8 +1,6 @@
 {% extends "trrrakk/layout.html" %}
-{% load render_table from django_tables2 %}
 
 {% block content %}
-
 <div class="container">
     <h1>{{ organization.name }}</h1>
     <div class="text-center">
@@ -15,7 +13,7 @@
         </div>
 
         <div class="row justify-content-md-center">
-            <form class="form-inline" action="{% url 'tracker:projects/create' organization %}" method="post">
+            <form class="form-inline" action="{% url 'tracker:project/create' organization %}" method="post">
                 {% csrf_token %}
 
                 <label class="sr-only" for="project_name">Project Name</label>

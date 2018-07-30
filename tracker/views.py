@@ -1,8 +1,10 @@
 from django.http import HttpResponseRedirect, HttpResponseForbidden, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
+from django_tables2 import RequestConfig
 
 from tracker.models import Organization, Project
+from tracker.tables import TimeRecordTable
 
 
 def index(request):
@@ -39,4 +41,19 @@ def project_create(request, organization):
     project.admins.add(request.user)
     project.save()
 
-    return redirect('tracker:projects', organization=organization)
+    return redirect('tracker:project', organization=organization)
+
+
+def project_timetable(request, organization, project_id):
+    organization = get_object_or_404(Organization, name=organization)
+    project = get_object_or_404(Project, id=project_id)
+
+    time_records = TimeRecordTable(project.timerecord_set.all())
+    RequestConfig(request).configure(time_records)
+
+    context = dict(
+        organization=organization,
+        project=project,
+        time_records=time_records
+    )
+    return render(request, 'tracker/timetable.html', context)

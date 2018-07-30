@@ -1,0 +1,11 @@
+{% extends "trrrakk/layout.html" %}
+
+{% load django_tables2 %}
+
+{% block content %}
+    <div class="container">
+        <h1>{{ project }}</h1>
+
+        {% render_table time_records %}
+    </div>
+{% endblock content %}
