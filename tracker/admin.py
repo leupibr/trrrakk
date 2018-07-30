@@ -16,20 +16,28 @@ class OrganizationAdmin(admin.ModelAdmin):
     search_fields = ['name']
 
 
+class ProfileAdmin(admin.ModelAdmin):
+    list_display = ('user', 'avatar')
+    search_fields = ['user__username']
+
+
 class ProjectAdmin(admin.ModelAdmin):
     fieldsets = [
         (None, {'fields': ['name', 'organization']}),
         ('User Management', {'fields': ['admins', 'editors'], 'classes': ['collapse']})
     ]
     list_display = ('name', 'organization')
+    search_fields = ['name']
 
 
 class TimeRecordAdmin(admin.ModelAdmin):
     list_display = ('user', 'project', 'start_time', 'end_time', 'duration')
     list_filter = ['user', 'project']
 
+    search_fields = ['user__username', 'project__name', 'start_time', 'end_time']
+
 
 admin.site.register(Organization, OrganizationAdmin)
+admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(TimeRecord, TimeRecordAdmin)
-admin.site.register(Profile)
