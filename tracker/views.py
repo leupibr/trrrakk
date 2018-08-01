@@ -1,6 +1,5 @@
-from django.http import HttpResponseRedirect, HttpResponseForbidden, Http404
+from django.http import HttpResponseForbidden
 from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse
 from django_tables2 import RequestConfig
 
 from tracker.models import Organization, Project
@@ -49,6 +48,7 @@ def project_timetable(request, organization, project_id):
     project = get_object_or_404(Project, id=project_id)
 
     time_records = TimeRecordTable(project.timerecord_set.all())
+    time_records.order_by = 'end_time'
     RequestConfig(request).configure(time_records)
 
     context = dict(
