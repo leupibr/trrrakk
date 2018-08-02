@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'social_django',
     'django_tables2',
+    'django_bootstrap_breadcrumbs',
     'analytical',
     'cookielaw',
     'bootstrap4',
@@ -120,6 +121,8 @@ AUTHENTICATION_BACKENDS = (
 
 LOGIN_URL = 'login'
 LOGIN_REDIRECT_URL = '/'
+
+BREADCRUMBS_TEMPLATE = "django_bootstrap_breadcrumbs/bootstrap4.html"
 
 GOOGLE_ANALYTICS_PROPERTY_ID = 'UA-122921683-1'
 

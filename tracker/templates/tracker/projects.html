@@ -1,5 +1,12 @@
 {% extends "trrrakk/layout.html" %}
 
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% breadcrumb "Home" "/" %}
+    {% breadcrumb organization.name "tracker:project" organization.name %}
+{% endblock %}
+
 {% block content %}
 <div class="container">
     <h1>{{ organization.name }}</h1>

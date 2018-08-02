@@ -12,7 +12,8 @@ django-bootstrap4 = "*"
 django-fontawesome = "*"
 django-analytical = "*"
 pillow = "*"
-"django-tables2" = "*"
+django-tables2 = "*"
+django-bootstrap-breadcrumbs = "*"
 
 [dev-packages]
 

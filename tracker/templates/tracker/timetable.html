@@ -1,6 +1,14 @@
 {% extends "trrrakk/layout.html" %}
 
 {% load django_tables2 %}
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% breadcrumb "Home" "/" %}
+    {% breadcrumb organization.name "tracker:project" organization.name %}
+    {% breadcrumb project.name "tracker:project/details" organization.name project.id %}
+    {% breadcrumb "Timetable" "tracker:project/timetable" organization.name project.id %}
+{% endblock %}
 
 {% block content %}
     <div class="container">

@@ -2,7 +2,9 @@
 {% load bootstrap4 %}
 {% load cookielaw_tags %}
 {% load fontawesome %}
+{% load django_bootstrap_breadcrumbs %}
 {% load static %}
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -24,6 +26,9 @@
     {% cookielaw_banner %}
     {% bootstrap_messages %}
     {% include "trrrakk/navigation.html" %}
+
+    {% block breadcrumbs %}{% endblock %}
+    {% render_breadcrumbs %}
 
     {% block content %}{% endblock %}
 

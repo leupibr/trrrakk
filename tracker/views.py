@@ -1,4 +1,4 @@
-from django.http import HttpResponseForbidden
+from django.http import HttpResponseForbidden, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django_tables2 import RequestConfig
 
@@ -43,6 +43,10 @@ def project_create(request, organization):
     return redirect('tracker:project', organization=organization)
 
 
+def project_details(request, organization, project_id):
+    raise Http404()
+
+
 def project_timetable(request, organization, project_id):
     organization = get_object_or_404(Organization, name=organization)
     project = get_object_or_404(Project, id=project_id)
@@ -57,3 +61,5 @@ def project_timetable(request, organization, project_id):
         time_records=time_records
     )
     return render(request, 'tracker/timetable.html', context)
+
+
