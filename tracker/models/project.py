@@ -33,6 +33,9 @@ class Project(models.Model):
     def random_name():
         return '{} {}'.format(random.choice(ONE), random.choice(TWO))
 
+    def is_member(self, user):
+        return user in self.admins.all() or user in self.editors.all()
+
 
 location = os.path.dirname(__file__)
 ONE = open(os.path.join(location, 'ONE.txt')).readlines()

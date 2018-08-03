@@ -1,8 +1,11 @@
+import pytz
 from django.http import HttpResponseForbidden, Http404
 from django.shortcuts import render, get_object_or_404, redirect
+from django.utils.datetime_safe import datetime
 from django_tables2 import RequestConfig
 
-from tracker.models import Organization, Project
+from tracker.forms import AddTimeRecordForm
+from tracker.models import Organization, Project, Setting, TimeRecord
 from tracker.tables import TimeRecordTable
 
 
@@ -47,6 +50,30 @@ def project_details(request, organization, project_id):
     raise Http404()
 
 
+def project_add_record(request, organization, project_id):
+    organization = get_object_or_404(Organization, name=organization)
+    project = get_object_or_404(Project, id=project_id)
+    setting = get_object_or_404(Setting, user=request.user)
+    timezone = pytz.timezone(str(setting.timezone))
+
+    if not project.is_member(request.user):
+        return HttpResponseForbidden()
+
+
+    entry = TimeRecord(project=project, user=request.user)
+    form = AddTimeRecordForm(request.POST)
+
+    start_time = datetime.strptime(form.data['start_time'], "%Y-%m-%dT%H:%M")
+    entry.start_time = timezone.localize(start_time, is_dst=None)
+
+    if form.data['end_time']:
+        end_time = datetime.strptime(form.data['end_time'], "%Y-%m-%dT%H:%M")
+        entry.end_time = timezone.localize(end_time, is_dst=None)
+
+    entry.save()
+    return redirect('tracker:project/timetable', organization=organization, project_id=project_id)
+
+
 def project_timetable(request, organization, project_id):
     organization = get_object_or_404(Organization, name=organization)
     project = get_object_or_404(Project, id=project_id)
@@ -55,10 +82,14 @@ def project_timetable(request, organization, project_id):
     time_records.order_by = 'end_time'
     RequestConfig(request).configure(time_records)
 
+    form_add_record = AddTimeRecordForm()
+    form_add_record.fields['start_time'].clean('2015-06-04 13:00')
+
     context = dict(
         organization=organization,
         project=project,
-        time_records=time_records
+        time_records=time_records,
+        form_add_record=form_add_record
     )
     return render(request, 'tracker/timetable.html', context)
 

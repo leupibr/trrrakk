@@ -32,20 +32,21 @@ STATICFILES_DIRS = [
 # Application definition
 
 INSTALLED_APPS = [
-    'tracker.apps.TrackerConfig',
+    'analytical',
+    'bootstrap4',
+    'cookielaw',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
     'django.contrib.messages',
+    'django.contrib.sessions',
     'django.contrib.staticfiles',
-    'social_django',
-    'django_tables2',
     'django_bootstrap_breadcrumbs',
-    'analytical',
-    'cookielaw',
-    'bootstrap4',
+    'django_tables2',
     'fontawesome',
+    'social_django',
+    'timezone_field',
+    'tracker.apps.TrackerConfig',
 ]
 
 MIDDLEWARE = [
