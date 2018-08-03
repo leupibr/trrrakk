@@ -1,5 +1,5 @@
 import django_tables2 as tables
-from django.contrib.auth.models import User
+from django.utils.formats import date_format
 from django.utils.html import format_html
 
 from tracker.models import TimeRecord
@@ -12,7 +12,9 @@ class UserColumn(tables.Column):
 
 class DateTimeColumn(tables.Column):
     def render(self, value):
-        return format_html(f'<time class="locale" datetime="{value.isoformat()}" format="lll"/>')
+        return format_html(f'<time datetime="{value.isoformat()}">'
+                           f'{date_format(value, format="SHORT_DATETIME_FORMAT", use_l10n=True)}'
+                           f'</time>')
 
 
 class TimeRecordTable(tables.Table):

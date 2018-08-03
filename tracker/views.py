@@ -2,6 +2,7 @@ import pytz
 from django.http import HttpResponseForbidden, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.datetime_safe import datetime
+from django.utils.translation import activate, get_language_from_request
 from django_tables2 import RequestConfig
 
 from tracker.forms import AddTimeRecordForm
@@ -59,7 +60,6 @@ def project_add_record(request, organization, project_id):
     if not project.is_member(request.user):
         return HttpResponseForbidden()
 
-
     entry = TimeRecord(project=project, user=request.user)
     form = AddTimeRecordForm(request.POST)
 
@@ -78,8 +78,10 @@ def project_timetable(request, organization, project_id):
     organization = get_object_or_404(Organization, name=organization)
     project = get_object_or_404(Project, id=project_id)
 
+    activate(get_language_from_request(request))
+
     time_records = TimeRecordTable(project.timerecord_set.all())
-    time_records.order_by = 'end_time'
+    time_records.order_by = '-end_time'
     RequestConfig(request).configure(time_records)
 
     form_add_record = AddTimeRecordForm()
