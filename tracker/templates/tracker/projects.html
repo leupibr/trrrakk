@@ -13,7 +13,7 @@
     <div class="text-center">
         {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
-        <div class="card-columns">
+        <div class="row">
             {% for project in projects.all %}
                 {% include 'tracker/projects.project.html' %}
             {% endfor %}
