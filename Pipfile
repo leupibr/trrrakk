@@ -18,6 +18,7 @@ django-tables2 = "*"
 django-bootstrap-breadcrumbs = "*"
 django-timezone-field = "*"
 whitenoise = "*"
+"psycopg2-binary" = "*"
 
 [dev-packages]
 
