@@ -23,7 +23,7 @@ SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = os.environ.get('SOCIAL_AUTH_GOOGLE_OAUTH2_SEC
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = bool(os.environ.get('DEBUG', False))
 
-ALLOWED_HOSTS = ['trrrakk.io', 'localhost']
+ALLOWED_HOSTS = ['trrrakk.io', 'localhost', 'trrrakk.herokuapp.com']
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'trrrakk/static')
