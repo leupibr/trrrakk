@@ -27,7 +27,6 @@ ALLOWED_HOSTS = ['trrrakk.io', 'localhost', 'trrrakk.herokuapp.com']
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'trrrakk/static'),
-    os.path.join(BASE_DIR, 'static'),
 ]
 
 # Application definition
