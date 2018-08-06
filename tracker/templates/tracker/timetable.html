@@ -1,0 +1,60 @@
+{% extends "trrrakk/layout.html" %}
+
+{% load django_tables2 %}
+{% load django_bootstrap_breadcrumbs %}
+{% load tz %}
+
+{% block breadcrumbs %}
+    {% breadcrumb "Home" "/" %}
+    {% breadcrumb organization.name "tracker:project" organization.name %}
+    {% breadcrumb project.name "tracker:project/details" organization.name project.id %}
+    {% breadcrumb "Timetable" "tracker:project/timetable" organization.name project.id %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <h1>{{ project }}</h1>
+
+        <div class="btn-toolbar mb-2" role="toolbar">
+            <div class="btn-group" role="group">
+                <button type="button" class="btn btn-success" data-toggle="modal" data-target="#addRecord">
+                    <i class="fa fa-plus-circle"></i>
+                </button>
+            </div>
+        </div>
+
+        {% render_table time_records %}
+
+        <div class="modal fade" id="addRecord" tabindex="-1" role="dialog">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Add Record</h5>
+                        <button type="button" class="close" data-dismiss="modal">
+                            <span>&times;</span>
+                        </button>
+                    </div>
+                    <form class="form" action="{% url 'tracker:project/add_record' organization project.id %}" method="post">
+                        {% csrf_token %}
+                        <div class="modal-body">
+                            {% for field in form_add_record %}
+                                <div class="form-group">
+                                {{ field.label_tag }}{% if field.field.required %}<span class="required">*</span>{% endif %}
+                                {{ field }}
+                                {% if field.help_text %}
+                                    <p class="help">{{ field.help_text|safe }}</p>
+                                {% endif %}
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Add</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+

@@ -1,0 +1,41 @@
+{% load analytical %}
+{% load bootstrap4 %}
+{% load cookielaw_tags %}
+{% load fontawesome %}
+{% load django_bootstrap_breadcrumbs %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    {% analytical_head_top %}
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Trrrakk</title>
+
+    {% bootstrap_css %}
+    {% fontawesome_stylesheet %}
+    <link rel="stylesheet" type="text/css" href="{% static 'cookielaw/css/cookielaw.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'trrrakk/css/style.css' %}" />
+
+    {% analytical_head_bottom %}
+</head>
+<body>
+    {% analytical_body_top %}
+    {% cookielaw_banner %}
+    {% bootstrap_messages %}
+    {% include "trrrakk/navigation.html" %}
+
+    {% block breadcrumbs %}{% endblock %}
+    {% render_breadcrumbs %}
+
+    {% block content %}{% endblock %}
+
+    <script src="{% static 'cookielaw/js/cookielaw.js' %}"></script>
+    {% bootstrap_javascript jquery='full' %}
+    <script src="{% static 'trrrakk/js/trrrakk.js' %}"></script>
+
+    {% analytical_body_bottom %}
+</body>
+</html>

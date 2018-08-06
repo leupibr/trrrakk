@@ -1,0 +1,7 @@
+{% extends "trrrakk/layout.html" %}
+
+{% block content %}
+    {% if not recent_projects %}
+        {% include 'tracker/index.no_projects.html' %}
+    {% endif %}
+{% endblock content %}
