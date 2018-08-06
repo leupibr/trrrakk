@@ -8,8 +8,6 @@ import timezone_field.fields
 
 class Migration(migrations.Migration):
 
-    replaces = [('tracker', '0001_initial'), ('tracker', '0002_settings_timezone'), ('tracker', '0003_auto_20180803_0748')]
-
     initial = True
 
     dependencies = [
