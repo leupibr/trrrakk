@@ -26,7 +26,8 @@ DEBUG = bool(os.environ.get('DEBUG', False))
 ALLOWED_HOSTS = ['trrrakk.io', 'localhost', 'trrrakk.herokuapp.com']
 
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'trrrakk/static')
+    os.path.join(BASE_DIR, 'trrrakk/static'),
+    os.path.join(BASE_DIR, 'static'),
 ]
 
 # Application definition
@@ -154,6 +155,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'trrrakk/static')
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_ROOT = 'trrrakk/media/'
 MEDIA_URL = '/trrrakk/media/'
