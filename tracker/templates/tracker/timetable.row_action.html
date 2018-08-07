@@ -1,0 +1,10 @@
+<div class="btn-group" role="group">
+    <button type="button" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#editRecord"
+            data-record_id="{{ record.id }}" data-start_time="{{ record.lstart_time }}" data-end_time="{{ record.lend_time }}">
+        <i class="fa fa-pencil"></i>
+    </button>
+    <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#deleteRecord"
+        data-record_id="{{ record.id }}" data-start_time="{{ record.lstart_time }}" data-end_time="{{ record.lend_time }}">
+        <i class="fa fa-times-circle"></i>
+    </button>
+</div>
