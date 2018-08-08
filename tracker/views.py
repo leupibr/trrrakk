@@ -95,7 +95,6 @@ def project_record_split(request, organization, project_id, record_id):
     return redirect('tracker:project/timetable', organization=organization, project_id=project_id)
 
 
-
 def project_record_edit(request, organization, project_id):
     setting = get_object_or_404(Setting, user=request.user)
     timezone = pytz.timezone(str(setting.timezone))

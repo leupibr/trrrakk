@@ -21,10 +21,10 @@ class Project(models.Model):
     def last_updated(self):
         last_time_record = self.timerecord_set \
             .filter(end_time__isnull=False) \
-            .order_by('end_time') \
+            .order_by('-modification_time') \
             .first()
 
-        return format_timespan(timezone.now() - last_time_record.end_time)
+        return format_timespan(timezone.now() - last_time_record.modification_time)
 
     def __str__(self):
         return '{} ({})'.format(self.name, self.organization.name)
