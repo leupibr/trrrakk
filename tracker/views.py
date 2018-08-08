@@ -76,6 +76,26 @@ def project_record_create(request, organization, project_id):
     return redirect('tracker:project/timetable', organization=organization, project_id=project_id)
 
 
+def project_record_split(request, organization, project_id, record_id):
+    entry = get_object_or_404(TimeRecord, id=record_id)
+
+    if not entry.user == request.user:
+        return HttpResponseForbidden()
+
+    entry2 = TimeRecord(user=entry.user, project=entry.project)
+    entry2.end_time = entry.end_time
+
+    duration = (entry.end_time - entry.start_time) // 2
+    entry.end_time = entry.end_time - duration
+    entry.end_time.replace(second=0)
+    entry2.start_time = entry.end_time
+
+    entry.save()
+    entry2.save()
+    return redirect('tracker:project/timetable', organization=organization, project_id=project_id)
+
+
+
 def project_record_edit(request, organization, project_id):
     setting = get_object_or_404(Setting, user=request.user)
     timezone = pytz.timezone(str(setting.timezone))
