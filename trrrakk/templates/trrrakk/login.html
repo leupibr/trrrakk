@@ -9,9 +9,11 @@
                 <form class="form-signin" action="{% url 'login' %}" method="post">
                     {% csrf_token %}
                     <label for="username" class="sr-only">Username</label>
-                    <input type="text" id="username" name="username" class="form-control" placeholder="Username" required="" autofocus="">
+                    <input type="text" id="username" name="username"
+                           class="form-control" placeholder="Username" required="" autofocus="" autocomplete="username">
                     <label for="password" class="sr-only">Password</label>
-                    <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="" autocomplete="current-password">
+                    <input type="password" id="password" name="password"
+                           class="form-control" placeholder="Password" required="" autocomplete="current-password">
                     {% if error_message %}
                         <span class="text-danger">{{ error_message }}</span>
                     {% endif %}
