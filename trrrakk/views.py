@@ -1,3 +1,4 @@
+from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth import logout as auth_logout
 
@@ -8,7 +9,7 @@ def login(request):
 
 def logout(request):
     auth_logout(request)
-    return redirect('index')
+    return HttpResponseRedirect('/')
 
 
 def cookie_policy(request):
