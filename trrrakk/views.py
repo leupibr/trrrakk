@@ -1,9 +1,12 @@
 from django.contrib import auth
 from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 
 
 def login(request):
+    if request.user.is_authenticated:
+        return redirect('logout')
+
     context = dict()
     if request.method == 'POST':
         username = request.POST['username']
@@ -20,7 +23,7 @@ def login(request):
 
 def logout(request):
     auth.logout(request)
-    return HttpResponseRedirect('/')
+    return redirect('login')
 
 
 def cookie_policy(request):
