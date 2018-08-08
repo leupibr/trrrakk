@@ -1,15 +1,33 @@
 {% extends "trrrakk/layout.html" %}
 
 {% block content %}
-  <h2>Login</h2>
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Login</button>
-  </form>
-   <br>
-  <p><strong>-- OR --</strong></p>
-  <a href="{% url 'social:begin' 'google-oauth2' %}">Login with Google</a><br>
-{#  <p><strong>-- OR --</strong></p>#}
-{#  <a href="{% url 'social:begin' 'github' %}">Login with GitHub</a><br>#}
+    <div class="container my-auto">
+        <div class="row justify-content-md-center">
+            <div class="col col-md-3 col-sm-6 col-xs-12 text-center">
+                <div class="my-4 fa fa-paper-plane fa-4x"></div>
+                <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+                <form class="form-signin" action="{% url 'login' %}" method="post">
+                    {% csrf_token %}
+                    <label for="username" class="sr-only">Username</label>
+                    <input type="text" id="username" name="username" class="form-control" placeholder="Username" required="" autofocus="">
+                    <label for="password" class="sr-only">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="" autocomplete="current-password">
+                    {% if error_message %}
+                        <span class="text-danger">{{ error_message }}</span>
+                    {% endif %}
+                    <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">Sign in</button>
+                </form>
+            </div>
+        </div>
+        <div class="row justify-content-md-center">
+            <div class="col col-md-3 col-sm-6 col-xs-12 text-center">
+                <hr class="border border-secondary" />
+                <a class="btn-link" href="{% url 'social:begin' 'google-oauth2' %}"><i class="fa fa-google-plus-square fa-2x"></i></a>
+                {# TODO: {% url 'social:begin' 'github' %} #}
+                <span class="btn-link disabled" href="" disabled=""><i class="fa fa-github-square fa-2x"></i></span>
+                {# TODO: {% url 'social:begin' 'facebook' %} #}
+                <span class="btn-link disabled" href="" disabled=""><i class="fa fa-facebook-square fa-2x"></i></span>
+            </div>
+        </div>
+    </div>
 {% endblock %}
