@@ -1,4 +1,4 @@
-## trrrakk x.y.z
+## trrrakk 0.2
 
 * Allows to modify and delete existing time records
 * Allows splitting existing time records in half
