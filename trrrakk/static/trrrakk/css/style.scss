@@ -1,3 +1,19 @@
+html {
+  min-height: 100%;
+  margin-bottom: 100px;
+}
+
+footer h5 {
+  text-transform: lowercase;
+  border-left: 3px solid #6c757d;
+  padding-left: .5em;
+}
+
+footer ul {
+  list-style: none;
+  padding-left: 0;
+}
+
 div.avatar {
   width: 38px;
   height: 38px;

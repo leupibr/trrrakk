@@ -22,6 +22,7 @@ from trrrakk import views, settings
 urlpatterns = [
     path('', include('tracker.urls'), name='tracker'),
     path('admin/', admin.site.urls),
+    path('contact/', views.contact, name='contact'),
     path('cookie-policy/', views.cookie_policy, name='cookie-policy'),
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),

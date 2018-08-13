@@ -26,6 +26,10 @@ def logout(request):
     return redirect('login')
 
 
+def contact(request):
+    return render(request, 'trrrakk/contact.html')
+
+
 def cookie_policy(request):
     return render(request, 'trrrakk/policy.html')
 

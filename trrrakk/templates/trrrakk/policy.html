@@ -1,7 +1,6 @@
 {% extends "trrrakk/layout.html" %}
 
 {% block content %}
-
     <div class="container">
         <h1>Cookies policy</h1>
         <h2>Definition and uses of cookies in this site</h2>
@@ -66,9 +65,8 @@
                 <i class="fa fa-opera"></i> Opera
             </a>
         </div>
-{#        <hr/>#}
-{#        <h2>More information</h2>#}
-{#        <p>If you wish to have more information regarding the use of cookies on this site, you can request it <a#}
-{#                href="/contact/">here</a>. </p>#}
+        <hr/>
+        <h2>More information</h2>
+        <p>If you wish to have more information regarding the use of cookies on this site, you can request it <a href="{% url 'contact' %}">here</a>.</p>
     </div>
 {% endblock %}

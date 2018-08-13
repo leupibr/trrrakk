@@ -1,10 +1,15 @@
 <footer class="footer fixed-bottom bg-light">
-    <div class="container">
+    <div class="container small">
         <div class="row">
             <div class="col mx-auto text-left">
+                <h5>trrrakk</h5>
+                <ul>
+                    <li><a href="{% url 'contact' %}"><i class="fa fa-angle-double-right"></i> Contact</a></li>
+                    <li><a href="{% url 'cookie-policy' %}"><i class="fa fa-angle-double-right"></i> Cookie Policy</a></li>
+                </ul>
             </div>
             <div class="col text-right">
-                <div class="small text-muted">{{ version }}</div>
+                <div class="text-muted">{{ version }}</div>
             </div>
         </div>
     </div>
