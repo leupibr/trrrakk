@@ -157,3 +157,29 @@ def project_timetable(request, organization, project_id):
     return render(request, 'tracker/timetable.html', context)
 
 
+def project_record_start(request, organization, project_id):
+    project = get_object_or_404(Project, id=project_id)
+
+    if not project.is_member(request.user):
+        return HttpResponseForbidden()
+
+    entry = TimeRecord(project_id=project_id, user=request.user)
+    entry.start_time = datetime.now().replace(second=0, microsecond=0)
+    entry.save()
+
+    return redirect('tracker:project/timetable', organization, project_id)
+
+
+def project_record_stop(request, organization, project_id):
+    project = get_object_or_404(Project, id=project_id)
+
+    if not project.is_member(request.user):
+        return HttpResponseForbidden()
+
+    entry = get_object_or_404(TimeRecord, user=request.user, project_id=project_id, end_time=None)
+    entry.end_time = datetime.now().replace(second=0, microsecond=0)
+    entry.save()
+
+    return redirect('tracker:project/timetable', organization, project_id)
+
+

@@ -26,6 +26,13 @@ class Project(models.Model):
 
         return format_timespan(timezone.now() - last_time_record.modification_time)
 
+    def is_tracking(self, user):
+        no_end_time = self.timerecord_set \
+            .filter(end_time__isnull=True) \
+            .filter(user=user)
+
+        return len(no_end_time) > 0
+
     def __str__(self):
         return '{} ({})'.format(self.name, self.organization.name)
 
