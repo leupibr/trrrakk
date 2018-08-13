@@ -1,3 +1,6 @@
+from os import path
+
+import markdown2
 from django.contrib import auth
 from django.http import HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -33,3 +36,7 @@ def contact(request):
 def cookie_policy(request):
     return render(request, 'trrrakk/policy.html')
 
+
+def release_notes(request):
+    html = markdown2.markdown_path(path=path.join(path.dirname(__file__), '..', 'RELEASE_NOTES.md'))
+    return render(request, 'trrrakk/release_notes.html', context={'release_notes': html})

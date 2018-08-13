@@ -20,6 +20,7 @@ psycopg2-binary = "*"
 setuptools-scm = "*"
 social-auth-app-django = "*"
 whitenoise = "*"
+markdown2 = "*"
 
 [dev-packages]
 

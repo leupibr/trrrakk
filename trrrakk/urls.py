@@ -22,9 +22,10 @@ from trrrakk import views, settings
 urlpatterns = [
     path('', include('tracker.urls'), name='tracker'),
     path('admin/', admin.site.urls),
+    path('auth/', include('social_django.urls', namespace='social')),
     path('contact/', views.contact, name='contact'),
     path('cookie-policy/', views.cookie_policy, name='cookie-policy'),
     path('login/', views.login, name='login'),
     path('logout/', views.logout, name='logout'),
-    path('auth/', include('social_django.urls', namespace='social'))
+    path('release_notes/', views.release_notes, name='release_notes'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
