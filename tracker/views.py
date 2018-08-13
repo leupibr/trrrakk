@@ -2,7 +2,9 @@ import pytz
 from django.http import HttpResponseForbidden, Http404
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils.datetime_safe import datetime
-from django.utils.translation import activate, get_language_from_request
+from django.utils.timezone import activate as tz_activate
+from django.utils.translation import activate as tl_activate
+from django.utils.translation import get_language_from_request
 from django_tables2 import RequestConfig
 
 from tracker.forms import AddTimeRecordForm
@@ -51,7 +53,7 @@ def project_details(request, organization, project_id):
     raise Http404()
 
 
-def project_add_record(request, organization, project_id):
+def project_record_create(request, organization, project_id):
     organization = get_object_or_404(Organization, name=organization)
     project = get_object_or_404(Project, id=project_id)
     setting = get_object_or_404(Setting, user=request.user)
@@ -74,13 +76,72 @@ def project_add_record(request, organization, project_id):
     return redirect('tracker:project/timetable', organization=organization, project_id=project_id)
 
 
+def project_record_split(request, organization, project_id, record_id):
+    entry = get_object_or_404(TimeRecord, id=record_id)
+
+    if not entry.user == request.user:
+        return HttpResponseForbidden()
+
+    entry2 = TimeRecord(user=entry.user, project=entry.project)
+    entry2.end_time = entry.end_time
+
+    duration = (entry.end_time - entry.start_time) // 2
+    entry.end_time = entry.end_time - duration
+    entry.end_time.replace(second=0)
+    entry2.start_time = entry.end_time
+
+    entry.save()
+    entry2.save()
+    return redirect('tracker:project/timetable', organization=organization, project_id=project_id)
+
+
+def project_record_edit(request, organization, project_id):
+    setting = get_object_or_404(Setting, user=request.user)
+    timezone = pytz.timezone(str(setting.timezone))
+
+    record_id = request.POST['record_id']
+    entry = get_object_or_404(TimeRecord, id=record_id)
+
+    if not entry.user == request.user:
+        return HttpResponseForbidden()
+
+    form = AddTimeRecordForm(request.POST)
+
+    start_time = datetime.strptime(form.data['start_time'], "%Y-%m-%dT%H:%M")
+    entry.start_time = timezone.localize(start_time, is_dst=None)
+
+    if form.data['end_time']:
+        end_time = datetime.strptime(form.data['end_time'], "%Y-%m-%dT%H:%M")
+        entry.end_time = timezone.localize(end_time, is_dst=None)
+    else:
+        entry.end_time = None
+
+    entry.save()
+    return redirect('tracker:project/timetable', organization=organization, project_id=project_id)
+
+
+def project_record_delete(request, organization, project_id):
+    record_id = request.POST['record_id']
+    entry = get_object_or_404(TimeRecord, id=record_id)
+
+    if not entry.user == request.user:
+        return HttpResponseForbidden()
+
+    entry.delete()
+    return redirect('tracker:project/timetable', organization=organization, project_id=project_id)
+
+
 def project_timetable(request, organization, project_id):
     organization = get_object_or_404(Organization, name=organization)
     project = get_object_or_404(Project, id=project_id)
+    setting = get_object_or_404(Setting, user=request.user)
+    timezone = pytz.timezone(str(setting.timezone))
+    request.session['django_timezone'] = str(setting.timezone)
 
-    activate(get_language_from_request(request))
+    tl_activate(get_language_from_request(request))
+    tz_activate(timezone)
 
-    time_records = TimeRecordTable(project.timerecord_set.all())
+    time_records = TimeRecordTable(project.timerecord_set.all(), request=request)
     time_records.order_by = '-end_time'
     RequestConfig(request).configure(time_records)
 
@@ -94,5 +155,31 @@ def project_timetable(request, organization, project_id):
         form_add_record=form_add_record
     )
     return render(request, 'tracker/timetable.html', context)
+
+
+def project_record_start(request, organization, project_id):
+    project = get_object_or_404(Project, id=project_id)
+
+    if not project.is_member(request.user):
+        return HttpResponseForbidden()
+
+    entry = TimeRecord(project_id=project_id, user=request.user)
+    entry.start_time = datetime.now().replace(second=0, microsecond=0)
+    entry.save()
+
+    return redirect('tracker:project/timetable', organization, project_id)
+
+
+def project_record_stop(request, organization, project_id):
+    project = get_object_or_404(Project, id=project_id)
+
+    if not project.is_member(request.user):
+        return HttpResponseForbidden()
+
+    entry = get_object_or_404(TimeRecord, user=request.user, project_id=project_id, end_time=None)
+    entry.end_time = datetime.now().replace(second=0, microsecond=0)
+    entry.save()
+
+    return redirect('tracker:project/timetable', organization, project_id)
 
 

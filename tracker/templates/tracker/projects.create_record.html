@@ -1,0 +1,30 @@
+<div class="modal fade" id="createRecord" tabindex="-1" role="dialog">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Add Record</h5>
+                <button type="button" class="close" data-dismiss="modal">
+                    <span>&times;</span>
+                </button>
+            </div>
+            <form class="form" action="{% url 'tracker:project/record/create' organization project.id %}" method="post">
+                {% csrf_token %}
+                <div class="modal-body">
+                    {% for field in form_add_record %}
+                        <div class="form-group">
+                            {{ field.label_tag }}{% if field.field.required %}<span class="required">*</span>{% endif %}
+                            {{ field }}
+                            {% if field.help_text %}
+                                <p class="help">{{ field.help_text|safe }}</p>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Add</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

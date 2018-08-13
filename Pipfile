@@ -4,20 +4,23 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
-django-heroku = "*"
-gunicorn = "*"
-django = "*"
 coverage = "*"
-social-auth-app-django = "*"
-django-cookie-law = "*"
-django-bootstrap4 = "*"
-django-fontawesome = "*"
+django = "*"
 django-analytical = "*"
-pillow = "*"
-django-tables2 = "*"
 django-bootstrap-breadcrumbs = "*"
+django-bootstrap4 = "*"
+django-cookie-law = "*"
+django-fontawesome = "*"
+django-heroku = "*"
+django-tables2 = "*"
 django-timezone-field = "*"
+gunicorn = "*"
+pillow = "*"
+psycopg2-binary = "*"
+setuptools-scm = "*"
+social-auth-app-django = "*"
 whitenoise = "*"
+markdown2 = "*"
 
 [dev-packages]
 

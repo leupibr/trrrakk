@@ -1,22 +1,28 @@
-<div class="card">
-    <div class="card-body text-left">
-        <h5 class="card-title">{{ project.name }}</h5>
-        <div class="row">
-            <div class="col-6">
-                <a href="#" class="card-link">
-                    <i class="fa fa-bar-chart"></i>
-                </a>
-                <a href="{% url 'tracker:project/timetable' organization=organization project_id=project.id %}" class="card-link"><i class="fa fa-clock-o"></i></a>
-            </div>
+{% load tracker_extras %}
+<div class="col-xs-6 col-sm-6 col-md-4 mb-3">
+    <div class="card">
+        <div class="card-body text-left">
+            <h5 class="card-title">{{ project.name }}</h5>
+            <div class="row">
+                <div class="col-6">
+{#                    <a href="#" class="card-link"><i class="fa fa-bar-chart"></i></a>#}
+                    <a href="{% url 'tracker:project/timetable' organization project.id %}" class="card-link"><i class="fa fa-clock-o"></i></a>
+                </div>
 
-            <div class="col-6 text-right">
-                <a href="#" class="card-link"><i class="fa fa-plus-circle"></i></a>
-                <a href="#" class="card-link"><i class="fa fa-play-circle text-success"></i></a>
-                <a href="#" class="card-link"><i class="fa fa-stop-circle text-danger"></i></a>
+                <div class="col-6 text-right">
+{#                    <a href="#" class="card-link"><i class="fa fa-plus-circle"></i></a>#}
+                    {% if project|is_tracking:user %}
+                        <a href="{% url 'tracker:project/record/stop' organization project.id %}" class="card-link">
+                            <i class="fa fa-stop-circle text-danger"></i></a>
+                    {% else %}
+                        <a href="{% url 'tracker:project/record/start' organization project.id %}" class="card-link">
+                            <i class="fa fa-play-circle text-success"></i></a>
+                    {% endif %}
+                </div>
             </div>
+            {% if project.last_updated %}
+                <p class="card-text"><small class="text-muted">Last updated {{ project.last_updated }} ago</small></p>
+            {% endif %}
         </div>
-        {% if project.last_updated %}
-            <p class="card-text"><small class="text-muted">Last updated {{ project.last_updated }} ago</small></p>
-        {% endif %}
     </div>
 </div>

@@ -21,10 +21,17 @@ class Project(models.Model):
     def last_updated(self):
         last_time_record = self.timerecord_set \
             .filter(end_time__isnull=False) \
-            .order_by('end_time') \
+            .order_by('-modification_time') \
             .first()
 
-        return format_timespan(timezone.now() - last_time_record.end_time)
+        return format_timespan(timezone.now() - last_time_record.modification_time)
+
+    def is_tracking(self, user):
+        no_end_time = self.timerecord_set \
+            .filter(end_time__isnull=True) \
+            .filter(user=user)
+
+        return len(no_end_time) > 0
 
     def __str__(self):
         return '{} ({})'.format(self.name, self.organization.name)
