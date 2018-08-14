@@ -17,7 +17,7 @@ class Organization(models.Model):
         return user in self.admins.all()
 
     def is_member(self, user):
-        pass
+        return user in self.members.all() or self.is_admin(user)
 
     def __str__(self):
         return self.name
