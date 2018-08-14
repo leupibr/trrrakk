@@ -24,7 +24,10 @@ class Project(models.Model):
             .order_by('-modification_time') \
             .first()
 
-        return format_timespan(timezone.now() - last_time_record.modification_time)
+        if not last_time_record:
+            return 'Never updated'
+
+        return 'Last updated {} ago'.format(format_timespan(timezone.now() - last_time_record.modification_time))
 
     def is_tracking(self, user):
         no_end_time = self.timerecord_set \
