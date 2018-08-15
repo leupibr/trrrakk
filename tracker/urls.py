@@ -23,4 +23,5 @@ urlpatterns = [
     path(f'{project_base}delete', views.project.record.delete, name='project/record/delete'),
     path(f'{project_base}split/<int:record_id>', views.project.record.split, name='project/record/split'),
 
+    path('user/reports', views.user.reports, name='user/reports'),
 ]

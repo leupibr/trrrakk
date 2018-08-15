@@ -1,0 +1,15 @@
+{% extends "trrrakk/layout.html" %}
+
+{% block content %}
+    <div class="container">
+        <h1>Weekly Report ({{ from_date|date }} - {{ to_date|date }})</h1>
+        <div id="chart"></div>
+    </div>
+
+{% endblock content %}
+
+{% block scripts %}
+    <script>
+        Highcharts.chart('chart', {{ chart|safe }});
+    </script>
+{% endblock %}

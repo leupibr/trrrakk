@@ -32,11 +32,14 @@
 
     {% block content %}{% endblock %}
 
+    {% include "trrrakk/footer.html" %}
+
     <script src="{% static 'cookielaw/js/cookielaw.js' %}"></script>
     {% bootstrap_javascript jquery='full' %}
     <script src="{% static 'trrrakk/js/trrrakk.js' %}"></script>
+    <script src="https://code.highcharts.com/highcharts.src.js"></script>
 
-    {% include "trrrakk/footer.html" %}
+    {% block scripts %}{% endblock %}
 
     {% analytical_body_bottom %}
 </body>
