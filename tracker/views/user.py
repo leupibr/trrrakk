@@ -22,15 +22,27 @@ def reports(request, from_date=None, to_date=None):
 
     projects = Project.objects.filter(id__in=time_records.values_list('project', flat=True).distinct())
 
+    print(projects)
+
+    matrix = [{
+        'project': project,
+        'duration': [
+            get_duration(time_records, project, d) for d in dates
+        ]}
+        for project in projects]
+    totals = [sum([p['duration'][i] for p in matrix], timedelta()) for i in range(len(dates))]
+    print(totals)
+
     series = [{
         'name': project.name,
-        'data': [get_records_by_project_date(time_records, project, d) for d in dates]
+        'data': [get_duration2(time_records, project, d) for d in dates]
     } for project in projects]
 
     def fd(d):
         return formats.date_format(d, 'DATE_FORMAT')
 
     tl_activate(get_language_from_request(request))
+
     chart = {
         'chart': {'type': 'column'},
         'title': False,
@@ -42,13 +54,28 @@ def reports(request, from_date=None, to_date=None):
     context = {
         'from_date': from_date,
         'to_date': to_date,
+        'projects': projects,
+        'dates': dates,
+        'matrix': matrix,
+        'totals': totals,
         'chart': json.dumps(chart),
     }
 
     return render(request, 'tracker/user/reports.html', context=context)
 
 
-def get_records_by_project_date(time_records, project, date):
+def get_duration(time_records, project, date):
+    weekday = date.isoweekday() + 1
+    weekday = weekday if weekday != 7 else 1
+
+    filtered_records = time_records \
+        .filter(end_time__week_day=weekday) \
+        .filter(project=project)
+
+    return sum((r.duration() for r in filtered_records), timedelta())
+
+
+def get_duration2(time_records, project, date):
     weekday = date.isoweekday() + 1
     weekday = weekday if weekday != 7 else 1
 

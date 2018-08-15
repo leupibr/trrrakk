@@ -2,8 +2,39 @@
 
 {% block content %}
     <div class="container">
-        <h1>Weekly Report ({{ from_date|date }} - {{ to_date|date }})</h1>
-        <div id="chart"></div>
+        <h1>Report Week {{ from_date|date:'W' }} ({{ from_date|date }} - {{ to_date|date }})</h1>
+        <div id="chart" class="mb-3"></div>
+
+        <table class="table table-sm">
+            <thead class="thead-light">
+                <th>Project</th>
+                {% for date in dates %}
+                    <th class="text-right">{{ date|date:"SHORT_DATE_FORMAT" }}</th>
+                {% endfor %}
+            </thead>
+            <tbody>
+            {% for row in matrix %}
+                <tr>
+                    <td>
+                        <a href="{% url 'tracker:project/details' row.project.organization.name row.project.id %}">
+                            {{ row.project.name }}
+                        </a>
+                    </td>
+                    {% for entry in row.duration %}
+                        <td class="text-right">{{ entry }}</td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Total</th>
+                    {% for entry in totals %}
+                        <th class="text-right">{{ entry }}</th>
+                    {% endfor %}
+                </tr>
+            </tfoot>
+        </table>
     </div>
 
 {% endblock content %}
