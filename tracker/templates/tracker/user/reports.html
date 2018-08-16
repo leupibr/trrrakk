@@ -1,12 +1,25 @@
 {% extends "tracker/base.html" %}
 
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% breadcrumb_raw "Home" "tracker:index" %}
+    {% breadcrumb_raw "Weekly Report" "tracker:user/reports" %}
+{% endblock %}
+
 {% block content %}
     <div class="container">
-        <h1>Report Week {{ from_date|date:'W' }} ({{ from_date|date }} - {{ to_date|date }})</h1>
-        <div id="chart" class="mb-3"></div>
+        <div class="btn-toolbar mb-2 pull-right" role="toolbar">
+            <div class="btn-group btn-group-sm" role="group">
+                <a href="#" class="btn btn-primary"><i class="fa fa-step-backward"></i></a>
+                <a href="#" class="btn btn-primary"><i class="fa fa-step-forward"></i></a>
+            </div>
+        </div>
+
+        <div id="chart" class="mb-2"></div>
 
         <table class="table table-sm">
-            <thead class="thead-light">
+            <thead>
                 <th>Project</th>
                 {% for date in dates %}
                     <th class="text-right">{{ date|date:"SHORT_DATE_FORMAT" }}</th>
@@ -36,7 +49,6 @@
             </tfoot>
         </table>
     </div>
-
 {% endblock content %}
 
 {% block scripts %}{{ block.super }}

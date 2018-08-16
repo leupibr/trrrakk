@@ -35,22 +35,22 @@ def reports(request, from_date=None, to_date=None):
         'data': [get_duration2(time_records, project, d) for d in dates]
     } for project in projects]
 
-    def fd(d):
-        return formats.date_format(d, 'DATE_FORMAT')
+    def fd(d, f='DATE_FORMAT'):
+        return formats.date_format(d, f)
 
     tl_activate(get_language_from_request(request))
 
+    title = f"Report Week {fd(from_date, 'W')} ({fd(from_date)} - {fd(to_date)})"
+
     chart = {
         'chart': {'type': 'column'},
-        'title': False,
+        'title': {'text': title},
         'xAxis': {'categories': [fd(d) for d in dates]},
         'yAxis': {'title': {'text': 'Hours (h)'}},
         'series': series
     }
 
     context = {
-        'from_date': from_date,
-        'to_date': to_date,
         'projects': projects,
         'dates': dates,
         'matrix': matrix,
