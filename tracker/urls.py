@@ -1,3 +1,4 @@
+from django.conf.urls import url
 from django.urls import path
 
 import tracker.views as views
@@ -23,5 +24,8 @@ urlpatterns = [
     path(f'{project_base}delete', views.project.record.delete, name='project/record/delete'),
     path(f'{project_base}split/<int:record_id>', views.project.record.split, name='project/record/split'),
 
-    path('user/reports', views.user.reports, name='user/reports'),
+    url(r'^user/reports'
+        r'(?:/(?P<from_date>\d{4}-\d{2}-\d{2})'
+        r'(?:/(?P<to_date>\d{4}-\d{2}-\d{2}))?'
+        r')?$', views.user.reports, name='user/reports'),
 ]

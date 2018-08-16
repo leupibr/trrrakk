@@ -1,5 +1,6 @@
 import json
 from datetime import datetime, timedelta
+from typing import Union
 
 import pytz
 from django.shortcuts import render
@@ -56,9 +57,27 @@ def reports(request, from_date=None, to_date=None):
         'matrix': matrix,
         'totals': totals,
         'chart': json.dumps(chart),
+        'step': {
+            'backward': get_backward_step(from_date),
+            'forward': get_forward_step(from_date)
+        }
     }
 
     return render(request, 'tracker/user/reports.html', context=context)
+
+
+def get_backward_step(current: datetime):
+    return {
+        'from': (current - timedelta(days=7)).strftime('%Y-%m-%d'),
+        'to': (current - timedelta(days=1)).strftime('%Y-%m-%d'),
+    }
+
+
+def get_forward_step(current: datetime):
+    return {
+        'from': (current + timedelta(days=7)).strftime('%Y-%m-%d'),
+        'to': (current + timedelta(days=13)).strftime('%Y-%m-%d'),
+    }
 
 
 def get_duration(time_records, project, date):
@@ -88,12 +107,15 @@ def to_hours_float(delta: timedelta):
     return (delta.total_seconds() // 60) / 60
 
 
-def begin_of_week(date: datetime = None):
+def begin_of_week(date: Union[datetime, str] = None):
     date = date or datetime.now(tz=pytz.utc)
+    if not isinstance(date, datetime):
+        date = datetime.strptime(date, '%Y-%m-%d')
+
     date = date.replace(hour=0, minute=0, second=0, microsecond=0)
     return date - timedelta(days=date.weekday())
 
 
-def end_of_week(date: datetime = None):
+def end_of_week(date: Union[datetime, str] = None):
     date = begin_of_week(date)
     return date + timedelta(days=6)

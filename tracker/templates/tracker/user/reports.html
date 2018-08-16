@@ -4,17 +4,24 @@
 
 {% block breadcrumbs %}
     {% breadcrumb_raw "Home" "tracker:index" %}
-    {% breadcrumb_raw "User" "/user/profile" %}
-    {% breadcrumb_raw "Weekly Report" "tracker:user/reports" %}
+    {% breadcrumb_raw user.get_full_name "/user/profile" %}
+    {% breadcrumb_raw "Reports" "tracker:user/reports" %}
 {% endblock %}
 
 {% block content %}
     <div class="container">
         <div class="btn-toolbar mb-2 pull-right" role="toolbar">
+            {% if step.forward or step.backward %}
             <div class="btn-group btn-group-sm" role="group">
-                <a href="#" class="btn btn-primary"><i class="fa fa-step-backward"></i></a>
-                <a href="#" class="btn btn-primary"><i class="fa fa-step-forward"></i></a>
+                {% if step.backward %}
+                    <a href="{% url 'tracker:user/reports' from_date=step.backward.from to_date=step.backward.to %}"
+                       class="btn btn-primary"><i class="fa fa-step-backward"></i></a>
+                {% endif %}{% if step.forward %}
+                    <a href="{% url 'tracker:user/reports' from_date=step.forward.from to_date=step.forward.to %}"
+                        class="btn btn-primary"><i class="fa fa-step-forward"></i></a>
+                {% endif %}
             </div>
+            {% endif %}
         </div>
 
         <div id="chart" class="mb-2"></div>
