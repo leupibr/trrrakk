@@ -1,5 +1,3 @@
-var locale = window.navigator.userLanguage || window.navigator.language;
-
 if (Notification.permission !== "granted") {
     Notification.requestPermission();
 }
