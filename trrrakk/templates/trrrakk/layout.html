@@ -30,7 +30,9 @@
     {% block breadcrumbs %}{% endblock %}
     {% render_breadcrumbs %}
 
-    {% block content %}{% endblock %}
+    <div id="content-main">
+        {% block content %}{% endblock %}
+    </div>
 
     {% include "trrrakk/footer.html" %}
 
