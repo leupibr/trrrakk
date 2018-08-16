@@ -1,6 +1,9 @@
 html {
   min-height: 100%;
-  margin-bottom: 100px; }
+  margin-bottom: 86px; }
+
+footer {
+  box-shadow: 0 -5px 5px -5px rgba(38, 50, 56, 0.7); }
 
 footer h5 {
   text-transform: lowercase;
@@ -27,7 +30,7 @@ div.avatar {
     z-index: 998; }
 
 .startpage {
-  height: calc(100vh - 56px);
+  height: calc(100vh - 86px);
   padding-top: 0;
   padding-bottom: 0; }
   .startpage hr {
