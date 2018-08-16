@@ -22,8 +22,6 @@ def reports(request, from_date=None, to_date=None):
 
     projects = Project.objects.filter(id__in=time_records.values_list('project', flat=True).distinct())
 
-    print(projects)
-
     matrix = [{
         'project': project,
         'duration': [
@@ -31,7 +29,6 @@ def reports(request, from_date=None, to_date=None):
         ]}
         for project in projects]
     totals = [sum([p['duration'][i] for p in matrix], timedelta()) for i in range(len(dates))]
-    print(totals)
 
     series = [{
         'name': project.name,
