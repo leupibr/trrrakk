@@ -3,6 +3,7 @@ from datetime import datetime, timedelta
 from typing import Union
 
 import pytz
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.utils import formats
 from django.utils.translation import activate as tl_activate, get_language_from_request
@@ -10,6 +11,7 @@ from django.utils.translation import activate as tl_activate, get_language_from_
 from tracker.models import TimeRecord, Project
 
 
+@login_required
 def reports(request, from_date=None, to_date=None):
     from_date = begin_of_week(from_date)
     to_date = end_of_week(to_date)

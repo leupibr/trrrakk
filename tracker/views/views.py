@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 
 from tracker.models import Organization, Project
@@ -8,6 +9,7 @@ def index(request):
     return render(request, 'tracker/index.html', context)
 
 
+@login_required
 def projects(request, organization, **kwargs):
     organization = Organization.get_or_create_by_name(name=organization, user=request.user)
 

@@ -1,4 +1,5 @@
 import pytz
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect
 from django.utils.datetime_safe import datetime
@@ -7,6 +8,7 @@ from tracker.forms import AddTimeRecordForm
 from tracker.models import Organization, Project, Setting, TimeRecord
 
 
+@login_required
 def create(request, organization, project_id):
     organization = get_object_or_404(Organization, name=organization)
     project = get_object_or_404(Project, id=project_id)
@@ -31,6 +33,7 @@ def create(request, organization, project_id):
     return redirect('tracker:project/timetable', organization=organization, project_id=project_id)
 
 
+@login_required
 def split(request, organization, project_id, record_id):
     entry = get_object_or_404(TimeRecord, id=record_id)
 
@@ -50,6 +53,7 @@ def split(request, organization, project_id, record_id):
     return redirect('tracker:project/timetable', organization=organization, project_id=project_id)
 
 
+@login_required
 def edit(request, organization, project_id):
     setting, _ = Setting.objects.get_or_create(user=request.user)
     timezone = pytz.timezone(str(setting.timezone))
@@ -75,6 +79,7 @@ def edit(request, organization, project_id):
     return redirect('tracker:project/timetable', organization=organization, project_id=project_id)
 
 
+@login_required
 def delete(request, organization, project_id):
     record_id = request.POST['record_id']
     entry = get_object_or_404(TimeRecord, id=record_id)
@@ -86,6 +91,7 @@ def delete(request, organization, project_id):
     return redirect('tracker:project/timetable', organization=organization, project_id=project_id)
 
 
+@login_required
 def start(request, organization, project_id):
     project = get_object_or_404(Project, id=project_id)
 
@@ -99,6 +105,7 @@ def start(request, organization, project_id):
     return redirect('tracker:project/timetable', organization, project_id)
 
 
+@login_required
 def stop(request, organization, project_id):
     project = get_object_or_404(Project, id=project_id)
 

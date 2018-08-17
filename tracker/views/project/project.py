@@ -1,4 +1,5 @@
 import pytz
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden, Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.timezone import activate as tz_activate
@@ -11,6 +12,7 @@ from tracker.tables import TimeRecordTable
 from tracker.views.views import projects
 
 
+@login_required
 def create(request, organization):
     organization = get_object_or_404(Organization, name=organization)
 
@@ -32,10 +34,12 @@ def create(request, organization):
     return redirect('tracker:project', organization=organization)
 
 
+@login_required
 def details(request, organization, project_id):
     raise Http404()
 
 
+@login_required
 def timetable(request, organization, project_id):
     organization = get_object_or_404(Organization, name=organization)
     project = get_object_or_404(Project, id=project_id)
