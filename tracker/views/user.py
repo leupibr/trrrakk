@@ -34,9 +34,9 @@ def reports(request, from_date=None, to_date=None):
     totals = [sum([p['duration'][i] for p in matrix], timedelta()) for i in range(len(dates))]
 
     series = [{
-        'name': project.name,
-        'data': [get_duration2(time_records, project, d) for d in dates]
-    } for project in projects]
+        'name': entry['project'].name,
+        'data': [to_hours_float(r) for r in entry['duration']]
+    } for entry in matrix]
 
     def fd(d, f='DATE_FORMAT'):
         return formats.date_format(d, f)
@@ -44,7 +44,6 @@ def reports(request, from_date=None, to_date=None):
     tl_activate(get_language_from_request(request))
 
     title = f"Report Week {fd(from_date, 'W')} ({fd(from_date)} - {fd(to_date)})"
-
     chart = {
         'chart': {'type': 'column'},
         'title': {'text': title},
@@ -91,18 +90,6 @@ def get_duration(time_records, project, date):
         .filter(project=project)
 
     return sum((r.duration() for r in filtered_records), timedelta())
-
-
-def get_duration2(time_records, project, date):
-    weekday = date.isoweekday() + 1
-    weekday = weekday if weekday != 7 else 1
-
-    filtered_records = time_records \
-        .filter(end_time__week_day=weekday) \
-        .filter(project=project)
-
-    delta = sum((r.duration() for r in filtered_records), timedelta())
-    return to_hours_float(delta)
 
 
 def to_hours_float(delta: timedelta):
