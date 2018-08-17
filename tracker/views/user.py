@@ -3,12 +3,14 @@ from datetime import datetime, timedelta
 from typing import Union
 
 import pytz
+from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.utils import formats
 from django.utils.translation import activate as tl_activate, get_language_from_request
 
-from tracker.models import TimeRecord, Project
+from tracker.forms import SettingsForm
+from tracker.models import TimeRecord, Project, Setting
 
 
 @login_required
@@ -65,6 +67,21 @@ def reports(request, from_date=None, to_date=None):
     }
 
     return render(request, 'tracker/user/reports.html', context=context)
+
+
+@login_required
+def settings(request):
+    actual, _ = Setting.objects.get_or_create(user=request.user)
+
+    if request.method == 'POST':
+        form = SettingsForm(request.POST, instance=actual)
+        if form.is_valid():
+            form.save()
+            messages.success(request, 'Profile updated')
+    else:
+        form = SettingsForm(instance=actual)
+
+    return render(request, 'tracker/user/settings.html', context={'form': form})
 
 
 def get_backward_step(current: datetime):

@@ -28,4 +28,5 @@ urlpatterns = [
         r'(?:/(?P<from_date>\d{4}-\d{2}-\d{2})'
         r'(?:/(?P<to_date>\d{4}-\d{2}-\d{2}))?'
         r')?$', views.user.reports, name='user/reports'),
+    path('settings', views.user.settings, name='user/settings'),
 ]

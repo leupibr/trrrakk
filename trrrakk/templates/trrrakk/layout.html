@@ -24,11 +24,16 @@
 <body>
     {% analytical_body_top %}
     {% cookielaw_banner %}
-    {% bootstrap_messages %}
     {% include "trrrakk/navigation.html" %}
 
     {% block breadcrumbs %}{% endblock %}
     {% render_breadcrumbs %}
+
+    {% if messages %}
+        <div class="container">
+            {% bootstrap_messages %}
+        </div>
+    {% endif %}
 
     <div id="content-main">
         {% block content %}{% endblock %}
