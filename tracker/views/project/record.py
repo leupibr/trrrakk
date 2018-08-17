@@ -10,7 +10,8 @@ from tracker.models import Organization, Project, Setting, TimeRecord
 def create(request, organization, project_id):
     organization = get_object_or_404(Organization, name=organization)
     project = get_object_or_404(Project, id=project_id)
-    setting = get_object_or_404(Setting, user=request.user)
+
+    setting, _ = Setting.objects.get_or_create(user=request.user)
     timezone = pytz.timezone(str(setting.timezone))
 
     if not project.is_member(request.user):
@@ -50,7 +51,7 @@ def split(request, organization, project_id, record_id):
 
 
 def edit(request, organization, project_id):
-    setting = get_object_or_404(Setting, user=request.user)
+    setting, _ = Setting.objects.get_or_create(user=request.user)
     timezone = pytz.timezone(str(setting.timezone))
 
     record_id = request.POST['record_id']

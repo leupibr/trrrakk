@@ -39,9 +39,9 @@ def details(request, organization, project_id):
 def timetable(request, organization, project_id):
     organization = get_object_or_404(Organization, name=organization)
     project = get_object_or_404(Project, id=project_id)
-    setting = get_object_or_404(Setting, user=request.user)
+
+    setting, _ = Setting.objects.get_or_create(user=request.user)
     timezone = pytz.timezone(str(setting.timezone))
-    request.session['django_timezone'] = str(setting.timezone)
 
     tl_activate(get_language_from_request(request))
     tz_activate(timezone)
