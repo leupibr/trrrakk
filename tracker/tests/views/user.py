@@ -19,9 +19,9 @@ class UserTests(TestCase):
         self.assertEqual(expected, end_of_week(input))
 
     def test_to_hours_float(self):
-        self.assertAlmostEqual(0, to_hours_float(timedelta()), places=2)
-        self.assertAlmostEqual(.5, to_hours_float(timedelta(minutes=30)), places=2)
-        self.assertAlmostEqual(1.5, to_hours_float(timedelta(minutes=90)), places=2)
+        self.assertAlmostEqual(0, to_decimal(timedelta()), places=2)
+        self.assertAlmostEqual(.5, to_decimal(timedelta(minutes=30)), places=2)
+        self.assertAlmostEqual(1.5, to_decimal(timedelta(minutes=90)), places=2)
 
     def test_get_backward_step(self):
         result = get_backward_step(datetime(day=13, month=8, year=2018))

@@ -13,9 +13,11 @@ from tracker.forms import SettingsForm
 from tracker.models import TimeRecord, Project, Setting
 
 
+
 @login_required
 def reports(request, from_date=None, to_date=None):
     setting, _ = Setting.objects.get_or_create(user=request.user)
+    tl_activate(setting.locale)
 
     from_date = begin_of_week(from_date)
     to_date = end_of_week(to_date)
@@ -32,20 +34,18 @@ def reports(request, from_date=None, to_date=None):
     matrix = [{
         'project': project,
         'duration': [
-            get_duration(time_records, project, d) for d in dates
+            format_matrix[setting.duration_format](get_duration(time_records, project, d)) for d in dates
         ]}
         for project in projects]
-    totals = [sum([p['duration'][i] for p in matrix], timedelta()) for i in range(len(dates))]
+    totals = build_sum(setting, dates, matrix)
 
     series = [{
         'name': entry['project'].name,
-        'data': [to_hours_float(r) for r in entry['duration']]
+        'data': [format_data[setting.duration_format](r) for r in entry['duration']]
     } for entry in matrix]
 
     def fd(d, f='DATE_FORMAT'):
         return formats.date_format(d, f)
-
-    tl_activate(setting.locale)
 
     title = f"Report Week {fd(from_date, 'W')} ({fd(from_date)} - {fd(to_date)})"
     chart = {
@@ -69,6 +69,11 @@ def reports(request, from_date=None, to_date=None):
     }
 
     return render(request, 'tracker/user/reports.html', context=context)
+
+
+def build_sum(setting, dates, matrix):
+    init = 0 if setting.duration_format == Setting.DURATION_FORMAT_DECIMAL else timedelta()
+    return [sum([p['duration'][i] for p in matrix], init) for i in range(len(dates))]
 
 
 @login_required
@@ -111,9 +116,19 @@ def get_duration(time_records, project, date):
     return sum((r.duration() for r in filtered_records), timedelta())
 
 
-def to_hours_float(delta: timedelta):
+def to_decimal(delta: timedelta):
     return (delta.total_seconds() // 60) / 60
 
+
+format_matrix = {
+    Setting.DURATION_FORMAT_CLASSIC: lambda v: v,
+    Setting.DURATION_FORMAT_DECIMAL: to_decimal,
+}
+
+format_data = {
+    Setting.DURATION_FORMAT_CLASSIC: to_decimal,
+    Setting.DURATION_FORMAT_DECIMAL: lambda v: v,
+}
 
 def begin_of_week(date: Union[datetime, str] = None):
     date = date or datetime.now(tz=pytz.utc)
