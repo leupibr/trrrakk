@@ -14,7 +14,7 @@ class Migration(migrations.Migration):
         migrations.AddField(
             model_name='setting',
             name='duration_format',
-            field=models.PositiveSmallIntegerField(choices=[(tracker.models.setting.DurationFormat(1), 'Classic (3:45)'), (tracker.models.setting.DurationFormat(2), 'Decimal (3.75)')], default=tracker.models.setting.DurationFormat(1)),
+            field=models.PositiveSmallIntegerField(choices=[(tracker.models.setting.Setting.DURATION_FORMAT_CLASSIC, 'Classic (3:45)'), (tracker.models.setting.Setting.DURATION_FORMAT_DECIMAL, 'Decimal (3.75)')], default=tracker.models.setting.Setting.DURATION_FORMAT_CLASSIC),
         ),
         migrations.AddField(
             model_name='setting',
