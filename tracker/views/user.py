@@ -7,7 +7,7 @@ from django.contrib import messages
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render
 from django.utils import formats
-from django.utils.translation import activate as tl_activate, get_language_from_request
+from django.utils.translation import activate as tl_activate
 
 from tracker.forms import SettingsForm
 from tracker.models import TimeRecord, Project, Setting
@@ -15,6 +15,8 @@ from tracker.models import TimeRecord, Project, Setting
 
 @login_required
 def reports(request, from_date=None, to_date=None):
+    setting, _ = Setting.objects.get_or_create(user=request.user)
+
     from_date = begin_of_week(from_date)
     to_date = end_of_week(to_date)
     dates = [from_date + timedelta(d) for d in range(7)]
@@ -43,7 +45,7 @@ def reports(request, from_date=None, to_date=None):
     def fd(d, f='DATE_FORMAT'):
         return formats.date_format(d, f)
 
-    tl_activate(get_language_from_request(request))
+    tl_activate(setting.locale)
 
     title = f"Report Week {fd(from_date, 'W')} ({fd(from_date)} - {fd(to_date)})"
     chart = {

@@ -47,7 +47,7 @@ def timetable(request, organization, project_id):
     setting, _ = Setting.objects.get_or_create(user=request.user)
     timezone = pytz.timezone(str(setting.timezone))
 
-    tl_activate(get_language_from_request(request))
+    tl_activate(setting.locale)
     tz_activate(timezone)
 
     time_records = TimeRecordTable(project.timerecord_set.all(), request=request)
