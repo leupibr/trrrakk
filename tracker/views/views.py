@@ -5,7 +5,12 @@ from tracker.models import Organization, Project
 
 
 def index(request):
-    context = dict(recent_projects=[])
+    if not request.user.is_authenticated:
+        return render(request, 'tracker/index.html')
+
+    recent_projects = Project.recent_projects(request.user)
+
+    context = dict(recent_projects=recent_projects)
     return render(request, 'tracker/index.html', context)
 
 

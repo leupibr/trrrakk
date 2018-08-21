@@ -46,6 +46,22 @@ class Project(models.Model):
     def is_member(self, user):
         return user in self.admins.all() or user in self.editors.all()
 
+    @staticmethod
+    def recent_projects(user, num=3):
+        user_projects = Project.objects \
+            .filter(timerecord__user=user) \
+            .order_by('-timerecord__modification_time')
+
+        recent_projects = []
+        for i in range(num):
+            p = user_projects \
+                .exclude(id__in=(p.id for p in recent_projects)) \
+                .first()
+            if not p:
+                break
+            recent_projects.append(p)
+        return recent_projects
+
 
 location = os.path.dirname(__file__)
 ONE = open(os.path.join(location, 'ONE.txt')).readlines()

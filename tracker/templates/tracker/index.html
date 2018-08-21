@@ -3,5 +3,14 @@
 {% block content %}
     {% if not recent_projects %}
         {% include 'tracker/index.no_projects.html' %}
+    {% else %}
+        <div class="container mt-3">
+            <h5>Recent projects</h5>
+            <div class="row bg-light pt-3 shadow">
+                {% for project in recent_projects %}
+                    {% include 'tracker/projects.project.html' %}
+                {% endfor %}
+            </div>
+        </div>
     {% endif %}
 {% endblock content %}
