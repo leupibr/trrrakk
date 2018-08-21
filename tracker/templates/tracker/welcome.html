@@ -1,0 +1,45 @@
+{% extends "tracker/base.html" %}
+
+{% load static %}
+
+{% block content %}
+    <div class="startpage d-flex">
+        <div class="container mt-3">
+            <h5 class="mb-4">Don't Waste Your Life</h5>
+            <h1 class="display-4 mb-5" style="line-height: .8em">Time Is<br />Precious</h1>
+            <div class="card-deck">
+                <div class="card">
+                    <img class="card-img-top" src="{% static 'tracker/img/time_tracking.jpg'  %}">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fa fa-clock-o"></i> Time tracking</h5>
+                        <p class="card-text">
+                            Track your precious time without loosing any of it and start running your business like a clockwork.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img class="card-img-top" src="{% static 'tracker/img/time_reporting.jpg' %}">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fa fa-bar-chart"></i> Time reporting</h5>
+                        <p class="card-text">
+                            Never ever loose the overview about your invested time and always keep track which project
+                            profited the most of you.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <img class="card-img-top" src="{% static 'tracker/img/organization.jpg' %}">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fa fa-building"></i> Organization scopes</h5>
+                        <p class="card-text">
+                            Working for different organizations and even running some private projects? No problem!
+                            Independent application scopes allow you to manage all of them in the same application.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

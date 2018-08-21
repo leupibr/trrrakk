@@ -6,7 +6,7 @@ from tracker.models import Organization, Project
 
 def index(request):
     if not request.user.is_authenticated:
-        return render(request, 'tracker/index.html')
+        return render(request, 'tracker/welcome.html')
 
     recent_projects = Project.recent_projects(request.user)
 

@@ -29,9 +29,12 @@ div.avatar {
     z-index: 998; }
 
 .startpage {
-  height: calc(100vh - 86px);
-  padding-top: 0;
-  padding-bottom: 0; }
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 86px;
+  align-items: center; }
   .startpage hr {
     max-width: 50px;
     border-color: #C0C0C0;

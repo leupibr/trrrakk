@@ -38,9 +38,12 @@ div.avatar {
 }
 
 .startpage {
-  height: calc(100vh - #{$footer-height});
-  padding-top: 0;
-  padding-bottom: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: $footer-height;
+  align-items: center;
 
   hr {
     max-width: 50px;
