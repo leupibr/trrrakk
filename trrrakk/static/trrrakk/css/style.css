@@ -40,4 +40,25 @@ div.avatar {
     border-color: #C0C0C0;
     border-width: 3px; }
 
+@media screen and (max-width: 767.98px) {
+  .table-collapse-by-row thead {
+    display: none; }
+  .table-collapse-by-row tr {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: .25rem;
+    display: block;
+    margin-bottom: 1em; }
+  .table-collapse-by-row td {
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    display: block;
+    font-size: .8em;
+    text-align: right; }
+    .table-collapse-by-row td:before {
+      content: attr(data-label);
+      float: left;
+      font-weight: bold; }
+    .table-collapse-by-row td:last-child {
+      border-bottom: none; } }
+
 /*# sourceMappingURL=style.css.map */

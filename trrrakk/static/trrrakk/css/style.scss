@@ -51,3 +51,39 @@ div.avatar {
     border-width: 3px;
   }
 }
+
+@media screen and (max-width: 767.98px) {
+  .table-collapse-by-row {
+
+    thead {
+      display: none;
+    }
+
+    tr {
+      border: 1px solid rgba(0,0,0,.125);
+      border-radius: .25rem;
+      display: block;
+      margin-bottom: 1em;
+    }
+
+    td {
+      border: none;
+      border-bottom: 1px solid rgba(0,0,0,.125);
+      display: block;
+      font-size: .8em;
+      text-align: right;
+
+      &:before {
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+
