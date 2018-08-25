@@ -39,3 +39,4 @@ class TimeRecordTable(tables.Table):
         model = TimeRecord
         template_name = 'django_tables2/bootstrap.html'
         fields = ('user', 'start_time', 'end_time', 'duration', 'action')
+        attrs = {'class': 'table table-sm table-responsive'}
