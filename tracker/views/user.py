@@ -13,7 +13,6 @@ from tracker.forms import SettingsForm
 from tracker.models import TimeRecord, Project, Setting
 
 
-
 @login_required
 def reports(request, from_date=None, to_date=None):
     setting, _ = Setting.objects.get_or_create(user=request.user)
@@ -57,6 +56,7 @@ def reports(request, from_date=None, to_date=None):
     }
 
     context = {
+        'setting': setting,
         'projects': projects,
         'dates': dates,
         'matrix': matrix,
@@ -129,6 +129,7 @@ format_data = {
     Setting.DURATION_FORMAT_CLASSIC: to_decimal,
     Setting.DURATION_FORMAT_DECIMAL: lambda v: v,
 }
+
 
 def begin_of_week(date: Union[datetime, str] = None):
     date = date or datetime.now(tz=pytz.utc)

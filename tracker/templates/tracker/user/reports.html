@@ -42,7 +42,13 @@
                         </a>
                     </td>
                     {% for entry in row.duration %}
-                        <td class="text-right">{{ entry }}</td>
+                        <td class="text-right">
+                            {% if setting.duration_format == 1 %}
+                                {{ entry }}
+                            {% else %}
+                                {{ entry|floatformat:2 }}
+                            {% endif %}
+                        </td>
                     {% endfor %}
                 </tr>
             {% endfor %}
@@ -51,7 +57,13 @@
                 <tr>
                     <th>Total</th>
                     {% for entry in totals %}
-                        <th class="text-right">{{ entry }}</th>
+                        <th class="text-right">
+                            {% if setting.duration_format == 1 %}
+                                {{ entry }}
+                            {% else %}
+                                {{ entry|floatformat:2 }}
+                            {% endif %}
+                        </th>
                     {% endfor %}
                 </tr>
             </tfoot>
