@@ -1,0 +1,78 @@
+{% extends "tracker/base.html" %}
+
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% breadcrumb_raw "Home" "tracker:index" %}
+    {% breadcrumb_raw user.get_full_name "/user/profile" %}
+    {% breadcrumb_raw "Reports" "tracker:user/reports" %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="btn-toolbar mb-2 pull-right" role="toolbar">
+            {% if step.forward or step.backward %}
+            <div class="btn-group btn-group-sm" role="group">
+                {% if step.backward %}
+                    <a href="{% url 'tracker:user/reports' from_date=step.backward.from to_date=step.backward.to %}"
+                       class="btn btn-primary"><i class="fa fa-step-backward"></i></a>
+                {% endif %}{% if step.forward %}
+                    <a href="{% url 'tracker:user/reports' from_date=step.forward.from to_date=step.forward.to %}"
+                        class="btn btn-primary"><i class="fa fa-step-forward"></i></a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div id="chart" class="mb-2"></div>
+
+        <table class="table table-sm table-responsive">
+            <thead>
+                <th>Project</th>
+                {% for date in dates %}
+                    <th class="text-right">{{ date|date:"SHORT_DATE_FORMAT" }}</th>
+                {% endfor %}
+            </thead>
+            <tbody>
+            {% for row in matrix %}
+                <tr>
+                    <td>
+                        <a href="{% url 'tracker:project/details' row.project.organization.name row.project.id %}">
+                            {{ row.project.name }}
+                        </a>
+                    </td>
+                    {% for entry in row.duration %}
+                        <td class="text-right">
+                            {% if setting.duration_format == 1 %}
+                                {{ entry }}
+                            {% else %}
+                                {{ entry|floatformat:2 }}
+                            {% endif %}
+                        </td>
+                    {% endfor %}
+                </tr>
+            {% endfor %}
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th>Total</th>
+                    {% for entry in totals %}
+                        <th class="text-right">
+                            {% if setting.duration_format == 1 %}
+                                {{ entry }}
+                            {% else %}
+                                {{ entry|floatformat:2 }}
+                            {% endif %}
+                        </th>
+                    {% endfor %}
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+{% endblock content %}
+
+{% block scripts %}{{ block.super }}
+    <script>
+        Highcharts.chart('chart', {{ chart|safe }});
+    </script>
+{% endblock %}

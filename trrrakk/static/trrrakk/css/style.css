@@ -1,6 +1,8 @@
-html {
-  min-height: 100%;
-  margin-bottom: 100px; }
+#content-main {
+  margin-bottom: 86px; }
+
+footer {
+  box-shadow: 0 -5px 5px -5px rgba(38, 50, 56, 0.7); }
 
 footer h5 {
   text-transform: lowercase;
@@ -27,12 +29,36 @@ div.avatar {
     z-index: 998; }
 
 .startpage {
-  height: calc(100vh - 56px);
-  padding-top: 0;
-  padding-bottom: 0; }
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 86px;
+  align-items: center; }
   .startpage hr {
     max-width: 50px;
     border-color: #C0C0C0;
     border-width: 3px; }
+
+@media screen and (max-width: 767.98px) {
+  .table-collapse-by-row thead {
+    display: none; }
+  .table-collapse-by-row tr {
+    border: 1px solid rgba(0, 0, 0, 0.125);
+    border-radius: .25rem;
+    display: block;
+    margin-bottom: 1em; }
+  .table-collapse-by-row td {
+    border: none;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+    display: block;
+    font-size: .8em;
+    text-align: right; }
+    .table-collapse-by-row td:before {
+      content: attr(data-label);
+      float: left;
+      font-weight: bold; }
+    .table-collapse-by-row td:last-child {
+      border-bottom: none; } }
 
 /*# sourceMappingURL=style.css.map */

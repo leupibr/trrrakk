@@ -1,4 +1,6 @@
-var locale = window.navigator.userLanguage || window.navigator.language;
+if (Notification.permission !== "granted") {
+    Notification.requestPermission();
+}
 
 $(function() {
     $('#editRecord').on('show.bs.modal', function (event) {
@@ -20,5 +22,4 @@ $(function() {
         var record_id = button.data('record_id');
         modal.find("input[name='record_id']").val(record_id);
     });
-
 });

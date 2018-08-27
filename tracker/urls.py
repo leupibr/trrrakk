@@ -1,21 +1,32 @@
+from django.conf.urls import url
 from django.urls import path
 
-from tracker import views
+import tracker.views as views
 
 app_name = 'tracker'
+
+projects_base = '<str:organization>/projects/'
+project_base = f'{projects_base}<int:project_id>/'
+
 urlpatterns = [
     path('', views.index, name='index'),
 
-    path('<str:organization>/projects/', views.projects, name='project'),
-    path('<str:organization>/projects/create', views.project_create, name='project/create'),
+    path(f'{projects_base}', views.projects, name='project'),
 
-    path('<str:organization>/projects/<int:project_id>/details', views.project_details, name='project/details'),
-    path('<str:organization>/projects/<int:project_id>/create', views.project_record_create, name='project/record/create'),
-    path('<str:organization>/projects/<int:project_id>/start', views.project_record_start, name='project/record/start'),
-    path('<str:organization>/projects/<int:project_id>/stop', views.project_record_stop, name='project/record/stop'),
-    path('<str:organization>/projects/<int:project_id>/edit', views.project_record_edit, name='project/record/edit'),
-    path('<str:organization>/projects/<int:project_id>/delete', views.project_record_delete, name='project/record/delete'),
-    path('<str:organization>/projects/<int:project_id>/split/<int:record_id>', views.project_record_split, name='project/record/split'),
+    path(f'{projects_base}create', views.project.create, name='project/create'),
+    path(f'{project_base}details', views.project.details, name='project/details'),
+    path(f'{project_base}timetable', views.project.timetable, name='project/timetable'),
 
-    path('<str:organization>/projects/<int:project_id>/timetable', views.project_timetable, name='project/timetable'),
+    path(f'{project_base}create', views.project.record.create, name='project/record/create'),
+    path(f'{project_base}start', views.project.record.start, name='project/record/start'),
+    path(f'{project_base}stop', views.project.record.stop, name='project/record/stop'),
+    path(f'{project_base}edit', views.project.record.edit, name='project/record/edit'),
+    path(f'{project_base}delete', views.project.record.delete, name='project/record/delete'),
+    path(f'{project_base}split/<int:record_id>', views.project.record.split, name='project/record/split'),
+
+    url(r'^user/reports'
+        r'(?:/(?P<from_date>\d{4}-\d{2}-\d{2})'
+        r'(?:/(?P<to_date>\d{4}-\d{2}-\d{2}))?'
+        r')?$', views.user.reports, name='user/reports'),
+    path('settings', views.user.settings, name='user/settings'),
 ]

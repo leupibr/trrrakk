@@ -1,33 +1,34 @@
-{% extends "trrrakk/layout.html" %}
+{% extends "tracker/base.html" %}
 
 {% load django_bootstrap_breadcrumbs %}
 
 {% block breadcrumbs %}
-    {% breadcrumb "Home" "/" %}
-    {% breadcrumb organization.name "tracker:project" organization.name %}
+    {% breadcrumb_raw "Home" "tracker:index" %}
+    {% breadcrumb_raw organization.name "tracker:project" organization.name %}
 {% endblock %}
 
 {% block content %}
 <div class="container">
-    <h1>{{ organization.name }}</h1>
-    <div class="text-center">
-        {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
-
-        <div class="row">
-            {% for project in projects.all %}
-                {% include 'tracker/projects.project.html' %}
-            {% endfor %}
-        </div>
-
+    <div class="btn-toolbar mb-2" role="toolbar">
         <form class="form-inline" action="{% url 'tracker:project/create' organization %}" method="post">
-            {% csrf_token %}
-
-            <label class="sr-only" for="project_name">Project Name</label>
-            <input type="text" class="form-control mb-2 mr-sm-2"
-                   id="project_name" name="project_name" placeholder="{{ random_project_name }}" />
-
-            <input type="submit" value="Create" class="btn btn-primary mb-2" />
+            <div class="input-group input-group-sm" role="group">
+                {% csrf_token %}
+                <label class="sr-only" for="project_name">Project Name</label>
+                <input type="text" class="form-control"
+                       id="project_name" name="project_name" placeholder="{{ random_project_name }}" />
+                <div class="input-group-append">
+                    <input type="submit" value="Create" class="btn btn-primary" />
+                </div>
+            </div>
         </form>
+    </div>
+
+    {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
+
+    <div class="row">
+        {% for project in projects.all %}
+            {% include 'tracker/projects.project.html' %}
+        {% endfor %}
     </div>
 </div>
 {% endblock content %}

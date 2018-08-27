@@ -1,0 +1,36 @@
+{% extends "tracker/base.html" %}
+
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% breadcrumb_raw "Home" "tracker:index" %}
+    {% breadcrumb_raw user.get_full_name "/user/profile" %}
+    {% breadcrumb_raw "Settings" "tracker:/user/settings" %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-md-center">
+            <form class="form col-md-6" method="post">
+                {% csrf_token %}
+
+                {% for field in form %}
+                    <div class="form-group">
+                        <label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %}*{% endif %}</label>
+                        {{ field }}
+                        {% if field.help_text %}
+                            <small class="form-text text-muted">{{ field.help_text|safe }}</small>
+                        {% endif %}
+                    </div>
+                {% endfor %}
+                <button type="submit" class="btn btn-primary">Save</button>
+            </form>
+        </div>
+    </div>
+{% endblock %}
+
+<form class="form" action="{% url 'tracker:project/record/create' organization project.id %}" method="post">
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+    </div>
+</form>

@@ -1,6 +1,11 @@
-html {
-  min-height: 100%;
-  margin-bottom: 100px;
+$footer-height: 86px;
+
+#content-main {
+  margin-bottom: $footer-height;
+}
+
+footer {
+  box-shadow: 0 -5px 5px -5px rgba(38,50,56,.7);
 }
 
 footer h5 {
@@ -33,9 +38,12 @@ div.avatar {
 }
 
 .startpage {
-  height: calc(100vh - 56px);
-  padding-top: 0;
-  padding-bottom: 0;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: $footer-height;
+  align-items: center;
 
   hr {
     max-width: 50px;
@@ -43,3 +51,39 @@ div.avatar {
     border-width: 3px;
   }
 }
+
+@media screen and (max-width: 767.98px) {
+  .table-collapse-by-row {
+
+    thead {
+      display: none;
+    }
+
+    tr {
+      border: 1px solid rgba(0,0,0,.125);
+      border-radius: .25rem;
+      display: block;
+      margin-bottom: 1em;
+    }
+
+    td {
+      border: none;
+      border-bottom: 1px solid rgba(0,0,0,.125);
+      display: block;
+      font-size: .8em;
+      text-align: right;
+
+      &:before {
+        content: attr(data-label);
+        float: left;
+        font-weight: bold;
+      }
+
+      &:last-child {
+        border-bottom: none;
+      }
+    }
+  }
+}
+
+

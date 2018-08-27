@@ -1,22 +1,20 @@
-{% extends "trrrakk/layout.html" %}
+{% extends "tracker/base.html" %}
 
 {% load django_tables2 %}
 {% load django_bootstrap_breadcrumbs %}
 {% load tz %}
 
 {% block breadcrumbs %}
-    {% breadcrumb "Home" "/" %}
-    {% breadcrumb organization.name "tracker:project" organization.name %}
-    {% breadcrumb project.name "tracker:project/details" organization.name project.id %}
-    {% breadcrumb "Timetable" "tracker:project/timetable" organization.name project.id %}
+    {% breadcrumb_raw "Home" "tracker:index" %}
+    {% breadcrumb_raw organization.name "tracker:project" organization.name %}
+    {% breadcrumb_raw project.name "tracker:project/details" organization.name project.id %}
+    {% breadcrumb_raw "Timetable" "tracker:project/timetable" organization.name project.id %}
 {% endblock %}
 
 {% block content %}
     <div class="container">
-        <h1>{{ project }}</h1>
-
-        <div class="btn-toolbar mb-2" role="toolbar">
-            <div class="btn-group" role="group">
+        <div class="btn-toolbar mb-2 pull-right" role="toolbar">
+            <div class="btn-group btn-group-sm" role="group">
                 <button type="button" class="btn btn-success" data-toggle="modal" data-target="#createRecord">
                     <i class="fa fa-plus-circle"></i>
                 </button>

@@ -30,12 +30,28 @@ class TimeRecordActionColumn(tables.TemplateColumn):
 
 
 class TimeRecordTable(tables.Table):
-    user = UserColumn()
-    start_time = DateTimeColumn(verbose_name='Start')
-    end_time = DateTimeColumn(verbose_name='End')
-    action = TimeRecordActionColumn(verbose_name='Action', template_name='tracker/timetable.row_action.html')
+    user = UserColumn(
+        attrs={'td': {'data-label': 'User'}}
+    )
+    start_time = DateTimeColumn(
+        verbose_name='Start',
+        attrs={'td': {'data-label': 'Start'}}
+    )
+    end_time = DateTimeColumn(
+        verbose_name='End',
+        attrs={'td': {'data-label': 'End'}}
+    )
+    duration = tables.columns.Column(
+        attrs={'td': {'data-label': 'Duration'}}
+    )
+    action = TimeRecordActionColumn(
+        verbose_name='Action',
+        template_name='tracker/timetable.row_action.html',
+        attrs={'td': {'data-label': 'Action'}}
+    )
 
     class Meta:
         model = TimeRecord
         template_name = 'django_tables2/bootstrap.html'
         fields = ('user', 'start_time', 'end_time', 'duration', 'action')
+        attrs = {'class': 'table table-sm table-collapse-by-row'}

@@ -1,3 +1,12 @@
+## trrrakk 0.3
+
+* Shows a matrix in addition to the charts at the
+  reports view
+* New user settings view with user settings such
+  as locale and duration formatting
+* Rework of views and new welcome page
+* Minor bugfixes and improvements
+
 ## trrrakk 0.2
 
 * Allows to modify and delete existing time records
