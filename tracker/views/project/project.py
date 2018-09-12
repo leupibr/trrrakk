@@ -52,7 +52,7 @@ def timetable(request, organization, project_id):
 
     time_records = TimeRecordTable(project.timerecord_set.all(), request=request)
     time_records.order_by = '-end_time'
-    RequestConfig(request).configure(time_records)
+    RequestConfig(request, paginate={'per_page': 15}).configure(time_records)
 
     form_add_record = AddTimeRecordForm()
 
