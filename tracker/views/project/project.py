@@ -51,7 +51,8 @@ def timetable(request, organization, project_id):
     tz_activate(timezone)
 
     time_records = TimeRecordTable(project.timerecord_set.all(), request=request)
-    time_records.order_by = '-end_time'
+    request.session['timetable.sort'] = request.GET.get('sort') or request.session['timetable.sort']
+    time_records.order_by = request.session.get('timetable.sort', '-end_time')
     RequestConfig(request, paginate={'per_page': 15}).configure(time_records)
 
     form_add_record = AddTimeRecordForm()
