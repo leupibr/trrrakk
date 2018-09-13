@@ -46,7 +46,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_bootstrap_breadcrumbs',
     'django_tables2',
-    'fontawesome',
     'social_django',
     'timezone_field',
     'tracker.apps.TrackerConfig',

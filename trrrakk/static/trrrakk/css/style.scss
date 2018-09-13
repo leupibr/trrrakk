@@ -55,10 +55,23 @@ div.avatar {
   }
 }
 
+ul.inline-list {
+  padding: 0;
+  display: inline;
+  list-style: none;
+
+  li {
+    display: inline;
+
+    &:after { content: ", "; }
+    &:last-child:after { content: ""; }
+  }
+}
+
 // table ordering
 table {
   th.orderable a::before {
-    font-family: FontAwesome;
+    font-family: 'Font Awesome\ 5 Free';
     content: "\f0dc";
     display: inline-block;
     padding-right: .2em;

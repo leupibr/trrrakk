@@ -5,20 +5,27 @@
         <div class="card-body text-left">
             <div class="card-title">
                 <div class="row">
-                    <h5 class="col-8" >{{ project.name }}</h5>
+                    <h5 class="col-8">
+                        <a class="text-dark" href="{% url 'tracker:project/details' project.organization.name project.id %}">
+                            {{ project.name }}
+                        </a>
+                    </h5>
                     {% if not organization %}
-                        <small class="col-4 text-muted text-right">{{ project.organization }}</small>
+                        <small class="col-4 text-right">
+                            <a class="text-muted" href="{% url 'tracker:project' project.organization.name %}">
+                                {{ project.organization }}
+                            </a>
+                        </small>
                     {% endif %}
                 </div>
             </div>
             <div class="row">
                 <div class="col-6">
-{#                    <a href="#" class="card-link"><i class="fa fa-bar-chart"></i></a>#}
-                    <a href="{% url 'tracker:project/timetable' project.organization project.id %}" class="card-link"><i class="fa fa-clock-o"></i></a>
+{#                    <a href="#" class="card-link"><i class="fa fa-chart-bar"></i></a>#}
+                    <a href="{% url 'tracker:project/timetable' project.organization project.id %}" class="card-link"><i class="far fa-clock"></i></a>
                 </div>
 
                 <div class="col-6 text-right">
-{#                    <a href="#" class="card-link"><i class="fa fa-plus-circle"></i></a>#}
                     {% if project|is_tracking:user %}
                         <a href="{% url 'tracker:project/record/stop' project.organization project.id %}" class="card-link">
                             <i class="fa fa-stop-circle text-danger"></i></a>

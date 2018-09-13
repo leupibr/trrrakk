@@ -14,6 +14,7 @@ urlpatterns = [
     path(f'{projects_base}', views.projects, name='project'),
 
     path(f'{projects_base}create', views.project.create, name='project/create'),
+    path(f'{project_base}delete', views.project.delete, name='project/delete'),
     path(f'{project_base}details', views.project.details, name='project/details'),
     path(f'{project_base}timetable', views.project.timetable, name='project/timetable'),
 
