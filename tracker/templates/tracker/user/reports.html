@@ -10,7 +10,8 @@
 
 {% block content %}
     <div class="container">
-        <div class="btn-toolbar mb-2 float-right" role="toolbar">
+        <div class="btn-toolbar mb-2 justify-content-between" role="toolbar">
+            <div class="btn-group btn-group-sm" role="group"></div>
             {% if step.forward or step.backward %}
             <div class="btn-group btn-group-sm" role="group">
                 {% if step.backward %}

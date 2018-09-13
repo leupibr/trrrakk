@@ -35,6 +35,18 @@ def create(request, organization):
 
 
 @login_required
+def delete(request, organization, project_id):
+    organization = get_object_or_404(Organization, name=organization)
+    project = get_object_or_404(Project, id=project_id)
+
+    if not organization.is_admin(request.user):
+        return HttpResponseForbidden()
+
+    project.delete()
+    return redirect('tracker:project', organization=organization)
+
+
+@login_required
 def details(request, organization, project_id):
     organization = get_object_or_404(Organization, name=organization)
     project = get_object_or_404(Project, id=project_id)
