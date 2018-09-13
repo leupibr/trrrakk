@@ -38,8 +38,19 @@ div.avatar {
     border-color: #C0C0C0;
     border-width: 3px; }
 
+ul.inline-list {
+  padding: 0;
+  display: inline;
+  list-style: none; }
+  ul.inline-list li {
+    display: inline; }
+    ul.inline-list li:after {
+      content: ", "; }
+    ul.inline-list li:last-child:after {
+      content: ""; }
+
 table th.orderable a::before {
-  font-family: FontAwesome;
+  font-family: 'Font Awesome\ 5 Free';
   content: "\f0dc";
   display: inline-block;
   padding-right: .2em;

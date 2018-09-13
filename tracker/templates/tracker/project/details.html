@@ -1,0 +1,43 @@
+{% extends "tracker/base.html" %}
+
+{% load django_bootstrap_breadcrumbs %}
+{% load django_tables2 %}
+{% load tz %}
+{% load tracker_extras %}
+
+{% block breadcrumbs %}
+    {% breadcrumb_raw "Home" "tracker:index" %}
+    {% breadcrumb_raw organization.name "tracker:project" organization.name %}
+    {% breadcrumb_raw project.name "tracker:project/details" organization.name project.id %}
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="btn-toolbar mb-2" role="toolbar">
+    </div>
+
+    {% if members %}
+    <div class="container-fluid mt-3">
+        <h5>Members</h5>
+        <ul class="inline-list">
+            {% for member in members %}
+                <li>
+                    {% if project|is_project_admin:member %}
+                        <i class="fa fa-user-tie"></i>
+                    {% else %}
+                        <i class="fa fa-user"></i>
+                    {% endif %}
+                    {{ member.first_name }} <b>{{ member.last_name }}</b></li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    {% if recent_changes %}
+    <div class="container-fluid mt-3">
+        <h5>Recent changes</h5>
+        {% render_table recent_changes %}
+    </div>
+    {% endif %}
+</div>
+{% endblock content %}

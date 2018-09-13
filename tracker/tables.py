@@ -55,3 +55,27 @@ class TimeRecordTable(tables.Table):
         template_name = 'django_tables2/bootstrap.html'
         fields = ('user', 'start_time', 'end_time', 'duration', 'action')
         attrs = {'class': 'table table-sm table-collapse-by-row'}
+
+
+class RecentRecordTable(tables.Table):
+    user = UserColumn(
+        attrs={'td': {'data-label': 'User'}}
+    )
+    start_time = DateTimeColumn(
+        verbose_name='Start',
+        attrs={'td': {'data-label': 'Start'}}
+    )
+    end_time = DateTimeColumn(
+        verbose_name='End',
+        attrs={'td': {'data-label': 'End'}}
+    )
+    duration = tables.columns.Column(
+        attrs={'td': {'data-label': 'Duration'}}
+    )
+
+    class Meta:
+        model = TimeRecord
+        orderable = False
+        template_name = 'django_tables2/bootstrap.html'
+        fields = ('user', 'start_time', 'end_time', 'duration')
+        attrs = {'class': 'table table-sm table-collapse-by-row table-striped'}
