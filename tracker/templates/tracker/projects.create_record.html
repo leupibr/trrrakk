@@ -7,7 +7,7 @@
                     <span>&times;</span>
                 </button>
             </div>
-            <form class="form" action="{% url 'tracker:project/record/create' organization project.id %}" method="post">
+            <form class="form" action="{% url 'tracker:project/record/create' organization project.id %}" method="post" novalidate>
                 {% csrf_token %}
                 <div class="modal-body">
                     {% for field in form_add_record %}
