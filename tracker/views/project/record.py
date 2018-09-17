@@ -98,6 +98,15 @@ def start(request, organization, project_id):
     if not project.is_member(request.user):
         return HttpResponseForbidden()
 
+    if request.user.is_tracking():
+        parallel_tracking_allowed = False  # TODO: get from user settings
+        if parallel_tracking_allowed:
+            raise NotImplemented()
+        else:
+            for entry in request.user.get_tracking_records():
+                entry.end_time = datetime.now().replace(second=0, microsecond=0)
+                entry.save()
+
     entry = TimeRecord(project_id=project_id, user=request.user)
     entry.start_time = datetime.now().replace(second=0, microsecond=0)
     entry.save()
