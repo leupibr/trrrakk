@@ -27,10 +27,10 @@
 
                 <div class="col-6 text-right">
                     {% if project|is_tracking:user %}
-                        <a href="{% url 'tracker:project/record/stop' project.organization project.id %}" class="card-link">
+                        <a href="{% url 'tracker:project/record/stop' project.organization project.id %}?from={{ request.path|urlencode }}" class="card-link">
                             <i class="fa fa-stop-circle text-danger"></i></a>
                     {% else %}
-                        <a href="{% url 'tracker:project/record/start' project.organization project.id %}" class="card-link">
+                        <a href="{% url 'tracker:project/record/start' project.organization project.id %}?from={{ request.path|urlencode }}" class="card-link">
                             <i class="fa fa-play-circle text-success"></i></a>
                     {% endif %}
                 </div>

@@ -102,7 +102,8 @@ def start(request, organization, project_id):
     entry.start_time = datetime.now().replace(second=0, microsecond=0)
     entry.save()
 
-    return redirect('tracker:project/timetable', organization, project_id)
+    target = request.GET.get('from', 'tracker:project/timetable')
+    return redirect(target, organization, project_id)
 
 
 @login_required
@@ -116,4 +117,5 @@ def stop(request, organization, project_id):
     entry.end_time = datetime.now().replace(second=0, microsecond=0)
     entry.save()
 
-    return redirect('tracker:project/timetable', organization, project_id)
+    target = request.GET.get('from', 'tracker:project/timetable')
+    return redirect(target, organization, project_id)
