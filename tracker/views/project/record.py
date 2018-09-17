@@ -4,7 +4,7 @@ from django.http import HttpResponseForbidden
 from django.shortcuts import get_object_or_404, redirect
 from django.utils.datetime_safe import datetime
 
-from tracker.forms import AddTimeRecordForm
+from tracker.forms import TimeRecordForm
 from tracker.models import Organization, Project, Setting, TimeRecord
 
 
@@ -20,7 +20,7 @@ def create(request, organization, project_id):
         return HttpResponseForbidden()
 
     entry = TimeRecord(project=project, user=request.user)
-    form = AddTimeRecordForm(request.POST)
+    form = TimeRecordForm(request.POST)
 
     start_time = datetime.strptime(form.data['start_time'], "%Y-%m-%dT%H:%M")
     entry.start_time = timezone.localize(start_time, is_dst=None)
@@ -64,7 +64,7 @@ def edit(request, organization, project_id):
     if not entry.user == request.user:
         return HttpResponseForbidden()
 
-    form = AddTimeRecordForm(request.POST)
+    form = TimeRecordForm(request.POST)
 
     start_time = datetime.strptime(form.data['start_time'], "%Y-%m-%dT%H:%M")
     entry.start_time = timezone.localize(start_time, is_dst=None)

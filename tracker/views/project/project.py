@@ -1,3 +1,5 @@
+from datetime import datetime
+
 import pytz
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponseForbidden
@@ -6,7 +8,7 @@ from django.utils.timezone import activate as tz_activate
 from django.utils.translation import activate as tl_activate
 from django_tables2 import RequestConfig
 
-from tracker.forms import AddTimeRecordForm
+from tracker.forms import TimeRecordForm
 from tracker.models import Organization, Project, Setting
 from tracker.tables import TimeRecordTable, RecentRecordTable
 from tracker.views.views import projects
@@ -94,12 +96,18 @@ def timetable(request, organization, project_id):
     time_records.order_by = request.session.get('timetable.sort', '-end_time')
     RequestConfig(request, paginate={'per_page': 15}).configure(time_records)
 
-    form_add_record = AddTimeRecordForm()
+    form_add_record = TimeRecordForm(initial={
+        "start_time": datetime.now(timezone).strftime('%Y-%m-%dT%H:%M')
+    })
+    form_edit_record = TimeRecordForm(initial={
+        "end_time": datetime.now(timezone).strftime('%Y-%m-%dT%H:%M')
+    })
 
     context = dict(
         organization=organization,
         project=project,
         time_records=time_records,
-        form_add_record=form_add_record
+        form_add_record=form_add_record,
+        form_edit_record=form_edit_record
     )
     return render(request, 'tracker/timetable.html', context)

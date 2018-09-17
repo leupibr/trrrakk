@@ -4,7 +4,7 @@ from timezone_field import forms as tzforms
 from tracker.models import Setting
 
 
-class AddTimeRecordForm(forms.Form):
+class TimeRecordForm(forms.Form):
     start_time = forms.DateTimeField(
         label='From',
         localize=True,
