@@ -54,11 +54,11 @@ def split(request, organization, project_id, record_id):
 
 
 @login_required
-def edit(request, organization, project_id):
+def edit(request, organization, project_id, record_id):
     setting, _ = Setting.objects.get_or_create(user=request.user)
     timezone = pytz.timezone(str(setting.timezone))
 
-    record_id = request.POST['record_id']
+    record_id = record_id or request.POST['record_id']
     entry = get_object_or_404(TimeRecord, id=record_id)
 
     if not entry.user == request.user:
@@ -80,8 +80,8 @@ def edit(request, organization, project_id):
 
 
 @login_required
-def delete(request, organization, project_id):
-    record_id = request.POST['record_id']
+def delete(request, organization, project_id, record_id):
+    record_id = record_id or request.POST['record_id']
     entry = get_object_or_404(TimeRecord, id=record_id)
 
     if not entry.user == request.user:

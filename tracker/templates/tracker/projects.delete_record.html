@@ -7,7 +7,7 @@
                     <span>&times;</span>
                 </button>
             </div>
-            <form class="form" action="{% url 'tracker:project/record/delete' organization project.id %}" method="post">
+            <form class="form" action="{% url 'tracker:project/record/delete' organization project.id 0 %}" method="post">
                 {% csrf_token %}
                 <input type="hidden" name="record_id" value="" />
                 <div class="modal-footer">
