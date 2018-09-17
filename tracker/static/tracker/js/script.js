@@ -13,6 +13,7 @@ $(function() {
         modal.find("input[name='start_time']").val(start_time);
 
         var end_time = button.data('end_time');
+        if(!end_time) return;
         modal.find("input[name='end_time']").val(end_time);
     });
 

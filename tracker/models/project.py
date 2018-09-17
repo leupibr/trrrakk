@@ -43,6 +43,9 @@ class Project(models.Model):
     def random_name():
         return '{} {}'.format(random.choice(ONE), random.choice(TWO))
 
+    def is_admin(self, user):
+        return user in self.admins.all()
+
     def is_member(self, user):
         return user in self.admins.all() or user in self.editors.all()
 

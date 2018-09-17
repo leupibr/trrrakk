@@ -7,11 +7,11 @@
                     <span>&times;</span>
                 </button>
             </div>
-            <form class="form" action="{% url 'tracker:project/record/edit' organization project.id %}" method="post">
+            <form class="form" action="{% url 'tracker:project/record/edit' organization project.id 0 %}" method="post" novalidate>
                 {% csrf_token %}
                 <input type="hidden" name="record_id" value="" />
                 <div class="modal-body">
-                    {% for field in form_add_record %}
+                    {% for field in form_edit_record %}
                         <div class="form-group">
                             {{ field.label_tag }}{% if field.field.required %}<span class="required">*</span>{% endif %}
                             {{ field }}

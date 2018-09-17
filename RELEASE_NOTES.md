@@ -1,3 +1,11 @@
+## trrrakk 0.4
+
+* Quicktrack buttons now automatically disable other running timers.
+* New project management view available, that allows to delete existing projects
+* Minor improvements in navigation
+* Minor improvements on user interface
+* Fixes issue with invalid field validation on iOS.
+
 ## trrrakk 0.3
 
 * Shows a matrix in addition to the charts at the

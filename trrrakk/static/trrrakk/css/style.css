@@ -3,15 +3,13 @@
 
 footer {
   box-shadow: 0 -5px 5px -5px rgba(38, 50, 56, 0.7); }
-
-footer h5 {
-  text-transform: lowercase;
-  border-left: 3px solid #6c757d;
-  padding-left: .5em; }
-
-footer ul {
-  list-style: none;
-  padding-left: 0; }
+  footer h5 {
+    text-transform: lowercase;
+    border-left: 3px solid #6c757d;
+    padding-left: .5em; }
+  footer ul {
+    list-style: none;
+    padding-left: 0; }
 
 div.avatar {
   width: 38px;
@@ -39,6 +37,30 @@ div.avatar {
     max-width: 50px;
     border-color: #C0C0C0;
     border-width: 3px; }
+
+ul.inline-list {
+  padding: 0;
+  display: inline;
+  list-style: none; }
+  ul.inline-list li {
+    display: inline; }
+    ul.inline-list li:after {
+      content: ", "; }
+    ul.inline-list li:last-child:after {
+      content: ""; }
+
+table th.orderable a::before {
+  font-family: 'Font Awesome\ 5 Free';
+  content: "\f0dc";
+  display: inline-block;
+  padding-right: .2em;
+  padding-bottom: .18em;
+  vertical-align: middle;
+  pointer-events: all; }
+table th.asc a::before {
+  content: "\f0de"; }
+table th.desc a::before {
+  content: "\f0dd"; }
 
 @media screen and (max-width: 767.98px) {
   .table-collapse-by-row thead {

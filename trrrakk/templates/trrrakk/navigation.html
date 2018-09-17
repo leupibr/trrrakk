@@ -20,7 +20,7 @@
                     </a>
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{% url 'tracker:user/reports' %}">
-                            <i class="fa fa-bar-chart"></i> Reports
+                            <i class="fa fa-chart-bar"></i> Reports
                         </a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{% url 'tracker:user/settings' %}">
@@ -28,14 +28,14 @@
                         </a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{% url 'logout' %}">
-                            <i class="fa fa-sign-out"></i> Sign out
+                            <i class="fa fa-sign-out-alt"></i> Sign out
                         </a>
                     </div>
                 </li>
             {% else %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'login' %}">
-                        <i class="fa fa-sign-in"></i> Sign in
+                        <i class="fa fa-sign-in-alt"></i> Sign in
                     </a>
                 </li>
             {% endif %}

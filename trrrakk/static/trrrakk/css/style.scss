@@ -4,21 +4,23 @@ $footer-height: 86px;
   margin-bottom: $footer-height;
 }
 
+// footer
 footer {
   box-shadow: 0 -5px 5px -5px rgba(38,50,56,.7);
+
+  h5 {
+    text-transform: lowercase;
+    border-left: 3px solid #6c757d;
+    padding-left: .5em;
+  }
+
+  ul {
+    list-style: none;
+    padding-left: 0;
+  }
 }
 
-footer h5 {
-  text-transform: lowercase;
-  border-left: 3px solid #6c757d;
-  padding-left: .5em;
-}
-
-footer ul {
-  list-style: none;
-  padding-left: 0;
-}
-
+// avatar
 div.avatar {
   width: 38px;
   height: 38px;
@@ -37,6 +39,7 @@ div.avatar {
   }
 }
 
+// start page
 .startpage {
   position: absolute;
   left: 0;
@@ -52,6 +55,41 @@ div.avatar {
   }
 }
 
+ul.inline-list {
+  padding: 0;
+  display: inline;
+  list-style: none;
+
+  li {
+    display: inline;
+
+    &:after { content: ", "; }
+    &:last-child:after { content: ""; }
+  }
+}
+
+// table ordering
+table {
+  th.orderable a::before {
+    font-family: 'Font Awesome\ 5 Free';
+    content: "\f0dc";
+    display: inline-block;
+    padding-right: .2em;
+    padding-bottom: .18em;
+    vertical-align: middle;
+    pointer-events: all;
+  }
+
+  th.asc a::before {
+    content: "\f0de";
+  }
+
+  th.desc a::before {
+    content: "\f0dd";
+  }
+}
+
+// collapsible table stuff
 @media screen and (max-width: 767.98px) {
   .table-collapse-by-row {
 
@@ -60,7 +98,7 @@ div.avatar {
     }
 
     tr {
-      border: 1px solid rgba(0,0,0,.125);
+      border: 1px solid rgba(0, 0, 0, .125);
       border-radius: .25rem;
       display: block;
       margin-bottom: 1em;
@@ -68,7 +106,7 @@ div.avatar {
 
     td {
       border: none;
-      border-bottom: 1px solid rgba(0,0,0,.125);
+      border-bottom: 1px solid rgba(0, 0, 0, .125);
       display: block;
       font-size: .8em;
       text-align: right;

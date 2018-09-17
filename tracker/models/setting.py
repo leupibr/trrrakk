@@ -1,6 +1,7 @@
 from django.conf.locale import LANG_INFO
 from django.contrib.auth import get_user_model
 from django.db import models
+from django.db.models import BooleanField
 from timezone_field import TimeZoneField
 
 
@@ -26,3 +27,5 @@ class Setting(models.Model):
         choices=DURATION_FORMATS,
         default=DURATION_FORMAT_CLASSIC
     )
+
+    allow_parallel_tracking = BooleanField(default=False)
