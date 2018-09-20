@@ -1,0 +1,42 @@
+{% extends "tracker/base.html" %}
+
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% breadcrumb_raw "Home" "tracker:index" %}
+    {% breadcrumb_raw user.get_full_name "/user/profile" %}
+    {% breadcrumb_raw "Reports" "tracker:user/reports" %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+
+        <div class="card-deck">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fa fa-chart-bar"></i> Weekly Time Report</h5>
+                    <p class="card-text">
+                        Detailed weekly report, that shows which project consumed how much of
+                        your precious time, day by day.
+                    </p>
+                    <small>
+                        <a class="text-muted" href="{% url 'tracker:user/reports/weekly_time' %}">Report for this week &rarr;</a>
+                    </small>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title"><i class="fa fa-chart-pie"></i> Monthly Work Distribution</h5>
+                    <p class="card-text">
+                        Rough overview of your projects showing which one consumed the most
+                        time during the month.
+                    </p>
+                    <small>
+                        <a class="text-muted" href="{% url 'tracker:user/reports/monthly_distribution' %}">Report for this month &rarr;</a>
+                    </small>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

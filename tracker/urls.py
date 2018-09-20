@@ -10,6 +10,8 @@ project_base = f'{projects_base}<int:project_id>/'
 records_base = f'{project_base}records/'
 record_base = f'{records_base}<int:record_id>/'
 
+reports_base = 'user/reports/'
+
 urlpatterns = [
     path('', views.index, name='index'),
 
@@ -27,7 +29,8 @@ urlpatterns = [
     path(f'{record_base}delete', views.project.record.delete, name='project/record/delete'),
     path(f'{record_base}split', views.project.record.split, name='project/record/split'),
 
-    path(f'user/reports/monthly_distribution', views.user.monthly_distribution, name='user/reports/monthly_distribution'),
-    path(f'user/reports/weekly_time', views.user.weekly_time, name='user/reports/weekly_time'),
+    path(f'user/reports', views.user.reports, name='user/reports'),
+    path(f'{reports_base}monthly_distribution', views.user.monthly_distribution, name='user/reports/monthly_distribution'),
+    path(f'{reports_base}weekly_time', views.user.weekly_time, name='user/reports/weekly_time'),
     path('settings', views.user.settings, name='user/settings'),
 ]

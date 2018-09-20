@@ -15,6 +15,10 @@ from tracker.models import TimeRecord, Project, Setting
 
 
 @login_required
+def reports(request):
+    return render(request, 'tracker/user/reports.html')
+
+@login_required
 def monthly_distribution(request, from_date=None, to_date=None):
     from_date = from_date or request.GET.get('from', None)
     to_date = to_date or request.GET.get('to', None)
