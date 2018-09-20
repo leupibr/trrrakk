@@ -93,7 +93,7 @@ def timetable(request, organization, project_id):
 
     time_records = TimeRecordTable(project.timerecord_set.all(), request=request)
     request.session['timetable.sort'] = request.GET.get('sort') or request.session.get('timetable.sort')
-    time_records.order_by = request.session.get('timetable.sort', '-end_time')
+    time_records.order_by = request.session.get('timetable.sort') or '-end_time'
     RequestConfig(request, paginate={'per_page': 15}).configure(time_records)
 
     form_add_record = TimeRecordForm(initial={
