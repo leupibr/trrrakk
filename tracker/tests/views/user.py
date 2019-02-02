@@ -24,12 +24,13 @@ class UserTests(TestCase):
         self.assertAlmostEqual(1.5, to_decimal(timedelta(minutes=90)), places=2)
 
     def test_get_backward_step(self):
-        result = get_backward_step(datetime(day=13, month=8, year=2018))
+        result = get_backward_step(datetime(day=13, month=8, year=2018), step=timedelta(days=7))
         self.assertEqual('2018-08-06', result['from'])
         self.assertEqual('2018-08-12', result['to'])
 
     def test_get_forward_step(self):
-        result = get_forward_step(datetime(day=13, month=8, year=2018))
+        result = get_forward_step(datetime(day=13, month=8, year=2018),
+                                  step=timedelta(days=7), duration=timedelta(days=6))
         self.assertEqual('2018-08-20', result['from'])
         self.assertEqual('2018-08-26', result['to'])
 
