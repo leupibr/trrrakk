@@ -1,5 +1,7 @@
-if (Notification.permission !== "granted") {
-    Notification.requestPermission();
+if ('Notification' in window) {
+    if (Notification.permission !== "granted") {
+        Notification.requestPermission();
+    }
 }
 
 $(document).on('show.bs.modal', '#editRecord', function (event) {
