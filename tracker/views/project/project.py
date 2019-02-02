@@ -23,12 +23,13 @@ def create(request, organization):
 
     try:
         project_name = request.POST['project_name']
+        identifier = request.POST['identifier']
         if not project_name.strip():
             raise KeyError()
     except KeyError:
         return projects(request, organization=organization.name, error_message="You didn't enter a project name.")
 
-    project = Project(name=project_name, organization=organization)
+    project = Project(name=project_name, identifier=identifier, organization=organization)
     project.save()
     project.admins.add(request.user)
     project.save()
@@ -93,7 +94,7 @@ def timetable(request, organization, project_id):
 
     time_records = TimeRecordTable(project.timerecord_set.all(), request=request)
     request.session['timetable.sort'] = request.GET.get('sort') or request.session.get('timetable.sort')
-    time_records.order_by = request.session.get('timetable.sort', '-end_time')
+    time_records.order_by = request.session.get('timetable.sort') or '-end_time'
     RequestConfig(request, paginate={'per_page': 15}).configure(time_records)
 
     form_add_record = TimeRecordForm(initial={

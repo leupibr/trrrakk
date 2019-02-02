@@ -1,0 +1,81 @@
+{% extends "tracker/base.html" %}
+
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% breadcrumb_raw "Home" "tracker:index" %}
+    {% breadcrumb_raw user.get_full_name "/user/profile" %}
+    {% breadcrumb_raw "Reports" "tracker:user/reports" %}
+    {% breadcrumb_raw "Monthly Work Distribution" "tracker:user/reports/monthly_distribution" %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="btn-toolbar mb-2 justify-content-between" role="toolbar">
+            <div class="btn-group btn-group-sm" role="group"></div>
+            {% if step.forward or step.backward %}
+            <div class="btn-group btn-group-sm" role="group">
+                {% if step.backward %}
+                    <a href="{% url 'tracker:user/reports/monthly_distribution' %}?from={{ step.backward.from }}&to={{ step.backward.to }}"
+                       class="btn btn-primary"><i class="fa fa-step-backward"></i></a>
+                {% endif %}{% if step.forward %}
+                    <a href="{% url 'tracker:user/reports/monthly_distribution' %}?from={{ step.forward.from }}&to={{ step.forward.to }}"
+                        class="btn btn-primary"><i class="fa fa-step-forward"></i></a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div id="chart" class="mb-2"></div>
+
+        <div class="table-responsive">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                        <th>Project</th>
+                        {% if show_identifier %}<th>Identifier</th>{% endif %}
+                        <th class="text-right">Duration</th>
+                    </tr>
+                </thead>
+                <tbody>
+                {% for row in matrix %}
+                    <tr>
+                        <td>
+                            <a href="{% url 'tracker:project/details' row.project.organization.name row.project.id %}">
+                                {{ row.project.name }}
+                            </a>
+                        </td>
+                        {% if show_identifier %}<td>{{ row.project.identifier }}</td>{% endif %}
+                        <td class="text-right">
+                            {% if setting.duration_format == 1 %}
+                                {{ row.duration }}
+                            {% else %}
+                                {{ row.duration|floatformat:2 }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Total</th>
+                        {% if show_identifier %}<th></th>{% endif %}
+                        <th class="text-right">
+                            {% if setting.duration_format == 1 %}
+                                {{ total }}
+                            {% else %}
+                                {{ total|floatformat:2 }}
+                            {% endif %}
+                        </th>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block scripts %}{{ block.super }}
+    <script>
+        Highcharts.chart('chart', {{ chart|safe }});
+    </script>
+{% endblock %}

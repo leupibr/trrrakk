@@ -49,6 +49,12 @@
         </div>
     </div>
 
+    {% if project.identifier %}
+    <div class="container-fluid mt-3">
+        <h4>{{ project.name }} ({{ project.identifier }})</h4>
+    </div>
+    {% endif %}
+
     {% if members %}
     <div class="container-fluid mt-3">
         <h5>Members</h5>
