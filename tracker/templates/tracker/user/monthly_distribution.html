@@ -33,6 +33,7 @@
                 <thead>
                     <tr>
                         <th>Project</th>
+                        {% if show_identifier %}<th>Identifier</th>{% endif %}
                         <th class="text-right">Duration</th>
                     </tr>
                 </thead>
@@ -44,6 +45,7 @@
                                 {{ row.project.name }}
                             </a>
                         </td>
+                        {% if show_identifier %}<td>{{ row.project.identifier }}</td>{% endif %}
                         <td class="text-right">
                             {% if setting.duration_format == 1 %}
                                 {{ row.duration }}
@@ -57,6 +59,7 @@
                 <tfoot>
                     <tr>
                         <th>Total</th>
+                        {% if show_identifier %}<th></th>{% endif %}
                         <th class="text-right">
                             {% if setting.duration_format == 1 %}
                                 {{ total }}

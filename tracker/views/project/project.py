@@ -23,12 +23,13 @@ def create(request, organization):
 
     try:
         project_name = request.POST['project_name']
+        identifier = request.POST['identifier']
         if not project_name.strip():
             raise KeyError()
     except KeyError:
         return projects(request, organization=organization.name, error_message="You didn't enter a project name.")
 
-    project = Project(name=project_name, organization=organization)
+    project = Project(name=project_name, identifier=identifier, organization=organization)
     project.save()
     project.admins.add(request.user)
     project.save()

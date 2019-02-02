@@ -26,11 +26,11 @@ class ProfileAdmin(admin.ModelAdmin):
 
 class ProjectAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None, {'fields': ['name', 'organization']}),
+        (None, {'fields': ['name', 'identifier', 'organization']}),
         ('User Management', {'fields': ['admins', 'editors'], 'classes': ['collapse']})
     ]
-    list_display = ('name', 'organization')
-    search_fields = ['name']
+    list_display = ('name', 'identifier', 'organization')
+    search_fields = ['name', 'identifier']
 
 
 class SettingAdmin(admin.ModelAdmin):

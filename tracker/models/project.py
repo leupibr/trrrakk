@@ -12,8 +12,10 @@ from tracker.models import Organization
 
 class Project(models.Model):
     name = models.CharField(max_length=200, null=False, blank=False)
+    identifier = models.CharField(max_length=200, null=False, blank=True)
 
-    admins = models.ManyToManyField(get_user_model(), related_name='administrated_projects', verbose_name='Administrators')
+    admins = models.ManyToManyField(get_user_model(), related_name='administrated_projects',
+                                    verbose_name='Administrators')
     editors = models.ManyToManyField(get_user_model(), blank=True, related_name='editable_projects')
 
     organization = models.ForeignKey(Organization, on_delete=models.CASCADE)

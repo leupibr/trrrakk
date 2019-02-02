@@ -78,6 +78,7 @@ def monthly_distribution(request, from_date=None, to_date=None):
 
     context = {
         'setting': setting,
+        'show_identifier': any(p.identifier for p in projects),
         'matrix': matrix,
         'total': total,
         'chart': json.dumps(chart),
@@ -137,6 +138,7 @@ def weekly_time(request, from_date=None, to_date=None):
 
     context = {
         'setting': setting,
+        'show_identifier': any(p.identifier for p in projects),
         'projects': projects,
         'dates': dates,
         'matrix': matrix,

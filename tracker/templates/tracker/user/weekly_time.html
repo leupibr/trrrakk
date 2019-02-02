@@ -33,6 +33,7 @@
                 <thead>
                     <tr>
                     <th>Project</th>
+                    {% if show_identifier %}<th>Identifier</th>{% endif %}
                     {% for date in dates %}
                         <th class="text-right">{{ date|date:"SHORT_DATE_FORMAT" }}</th>
                     {% endfor %}
@@ -46,6 +47,7 @@
                                 {{ row.project.name }}
                             </a>
                         </td>
+                        {% if show_identifier %}<td>{{ row.project.identifier }}</td>{% endif %}
                         {% for entry in row.duration %}
                             <td class="text-right">
                                 {% if setting.duration_format == 1 %}
@@ -61,6 +63,7 @@
                 <tfoot>
                     <tr>
                         <th>Total</th>
+                        {% if show_identifier %}<th></th>{% endif %}
                         {% for entry in totals %}
                             <th class="text-right">
                                 {% if setting.duration_format == 1 %}
