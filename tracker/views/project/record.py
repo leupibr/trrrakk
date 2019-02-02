@@ -22,13 +22,11 @@ def create(request, organization, project_id):
     entry = TimeRecord(project=project, user=request.user)
     form = TimeRecordForm(request.POST)
 
-    start_timestamp = "{start_date}T{start_time}".format(**form.data.dict())
-    start_time = datetime.strptime(start_timestamp, "%Y-%m-%dT%H:%M")
+    start_time = datetime.strptime(form.data['start_time'], "%Y-%m-%dT%H:%M")
     entry.start_time = timezone.localize(start_time, is_dst=None)
 
     if form.data['end_time']:
-        end_timestamp = "{end_date}T{end_time}".format(**form.data.dict())
-        end_time = datetime.strptime(end_timestamp, "%Y-%m-%dT%H:%M")
+        end_time = datetime.strptime(form.data['end_time'], "%Y-%m-%dT%H:%M")
         entry.end_time = timezone.localize(end_time, is_dst=None)
 
     entry.save()
@@ -68,13 +66,11 @@ def edit(request, organization, project_id, record_id):
 
     form = TimeRecordForm(request.POST)
 
-    start_timestamp = "{start_date}T{start_time}".format(**form.data.dict())
-    start_time = datetime.strptime(start_timestamp, "%Y-%m-%dT%H:%M")
+    start_time = datetime.strptime(form.data['start_time'], "%Y-%m-%dT%H:%M")
     entry.start_time = timezone.localize(start_time, is_dst=None)
 
     if form.data['end_time']:
-        end_timestamp = "{end_date}T{end_time}".format(**form.data.dict())
-        end_time = datetime.strptime(end_timestamp, "%Y-%m-%dT%H:%M")
+        end_time = datetime.strptime(form.data['end_time'], "%Y-%m-%dT%H:%M")
         entry.end_time = timezone.localize(end_time, is_dst=None)
     else:
         entry.end_time = None

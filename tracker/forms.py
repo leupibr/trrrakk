@@ -5,27 +5,15 @@ from tracker.models import Setting
 
 
 class TimeRecordForm(forms.Form):
-    start_date = forms.DateField(
-        label='From Date',
+    start_time = forms.DateTimeField(
+        label='From',
         localize=True,
-        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'})
-    )
-    start_time = forms.TimeField(
-        label='From Time',
-        localize=True,
-        widget=forms.TimeInput(attrs={'type': 'time', 'class': 'form-control'})
-    )
+        widget=forms.DateTimeInput(attrs={'type': 'datetime-local', 'class': 'form-control'}))
 
-    end_date = forms.DateField(
-        label='To Date',
-        localize=True,
-        widget=forms.DateInput(attrs={'type': 'date', 'class': 'form-control'})
-    )
-    end_time = forms.TimeField(
-        label='To Time',
-        localize=True,
-        widget=forms.TimeInput(attrs={'type': 'time', 'class': 'form-control'})
-    )
+    end_time = forms.DateTimeField(
+        label='To',
+        required=False,
+        widget=forms.DateTimeInput(attrs={'type': 'datetime-local', 'class': 'form-control'}))
 
 
 class SettingsForm(forms.ModelForm):
