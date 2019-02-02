@@ -1,3 +1,10 @@
+## trrrakk 0.5
+* Redesign of reports including additional monthly report
+* Fixes issue with invalid icons on policy page
+* Fixes issues while editing time records on mobile devices
+* Fixes issues with ordering on timetable
+* General cleanup and package updates
+
 ## trrrakk 0.4
 
 * Quicktrack buttons now automatically disable other running timers.
