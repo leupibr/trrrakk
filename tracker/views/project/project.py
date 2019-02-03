@@ -105,6 +105,12 @@ def timetable(request, organization, project_id):
         "end_time": current_time.strftime('%Y-%m-%dT%H:%M')
     })
 
+    step_in_seconds = setting.timestamp_rounding * 60
+    form_add_record.fields['start_time'].widget.attrs.update(step=step_in_seconds)
+    form_add_record.fields['end_time'].widget.attrs.update(step=step_in_seconds)
+    form_edit_record.fields['start_time'].widget.attrs.update(step=step_in_seconds)
+    form_edit_record.fields['end_time'].widget.attrs.update(step=step_in_seconds)
+
     context = dict(
         organization=organization,
         project=project,
