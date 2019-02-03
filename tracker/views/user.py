@@ -37,11 +37,12 @@ def monthly_distribution(request, from_date=None, to_date=None):
         .select_related('project')
 
     projects = Project.objects.filter(id__in=time_records.values_list('project', flat=True).distinct())
+    print(projects)
 
     matrix = [{
         'project': project,
         'duration': build_sum(setting, [
-            format_matrix[setting.duration_format](get_duration(time_records, project, d)) for d in dates
+            format_matrix[setting.duration_format](get_duration_by_date(time_records, project, d)) for d in dates
         ])}
         for project in projects]
     total = build_sum(setting, [p['duration'] for p in matrix])
@@ -114,7 +115,7 @@ def weekly_time(request, from_date=None, to_date=None):
     matrix = [{
         'project': project,
         'duration': [
-            format_matrix[setting.duration_format](get_duration(time_records, project, d)) for d in dates
+            format_matrix[setting.duration_format](get_duration_by_weekday(time_records, project, d)) for d in dates
         ]}
         for project in projects]
     totals = build_sum_for_dates(setting, dates, matrix)
@@ -192,12 +193,20 @@ def get_forward_step(current: datetime, step: timedelta, duration: timedelta):
     }
 
 
-def get_duration(time_records, project, date):
+def get_duration_by_weekday(time_records, project, date):
     weekday = date.isoweekday() + 1
     weekday = weekday if weekday != 7 else 1
 
     filtered_records = time_records \
         .filter(end_time__week_day=weekday) \
+        .filter(project=project)
+
+    return sum((r.duration() for r in filtered_records), timedelta())
+
+
+def get_duration_by_date(time_records, project, date):
+    filtered_records = time_records \
+        .filter(end_time__date=date) \
         .filter(project=project)
 
     return sum((r.duration() for r in filtered_records), timedelta())
