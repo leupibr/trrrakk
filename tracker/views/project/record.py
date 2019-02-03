@@ -102,7 +102,7 @@ def start(request, organization, project_id):
 
     setting, _ = Setting.objects.get_or_create(user=request.user)
 
-    current_time = round_time(
+    current_time = TimeRecord.round_time(
         datetime.now().replace(second=0, microsecond=0),
         timedelta(minutes=setting.timestamp_rounding))
 
@@ -128,7 +128,7 @@ def stop(request, organization, project_id):
 
     setting, _ = Setting.objects.get_or_create(user=request.user)
 
-    current_time = round_time(
+    current_time = TimeRecord.round_time(
         datetime.now().replace(second=0, microsecond=0),
         timedelta(minutes=setting.timestamp_rounding))
 
@@ -138,18 +138,3 @@ def stop(request, organization, project_id):
 
     target = request.GET.get('from', 'tracker:project/timetable')
     return redirect(target, organization, project_id)
-
-
-def round_time(dt: datetime, resolution: timedelta):
-    """
-    Rounds a timestamp by a given resolution.
-    Function is based on the following answer on stackoverflow: https://stackoverflow.com/a/31005978
-
-    :param dt: Timestamp to round
-    :param resolution: Precision of the output
-    :return: A new timestamp rounded to the given precision
-    """
-    round_to = resolution.total_seconds()
-    seconds = (dt - dt.min).seconds
-    rounding = (seconds + round_to / 2) // round_to * round_to
-    return dt + timedelta(0, rounding - seconds, -dt.microsecond)
