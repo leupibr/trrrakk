@@ -101,13 +101,17 @@ def start(request, organization, project_id):
     if not project.is_member(request.user):
         return HttpResponseForbidden()
 
+    current_time = round_time(
+        datetime.now().replace(second=0, microsecond=0),
+        timedelta(minutes=10))
+
     if request.user.is_tracking() and not setting.allow_parallel_tracking:
         for entry in request.user.get_tracking_records():
-            entry.end_time = datetime.now().replace(second=0, microsecond=0)
+            entry.end_time = current_time
             entry.save()
 
     entry = TimeRecord(project_id=project_id, user=request.user)
-    entry.start_time = datetime.now().replace(second=0, microsecond=0)
+    entry.start_time = current_time
     entry.save()
 
     target = request.GET.get('from', 'tracker:project/timetable')
@@ -121,8 +125,12 @@ def stop(request, organization, project_id):
     if not project.is_member(request.user):
         return HttpResponseForbidden()
 
+    current_time = round_time(
+        datetime.now().replace(second=0, microsecond=0),
+        timedelta(minutes=10))
+
     entry = get_object_or_404(TimeRecord, user=request.user, project_id=project_id, end_time=None)
-    entry.end_time = datetime.now().replace(second=0, microsecond=0)
+    entry.end_time = current_time
     entry.save()
 
     target = request.GET.get('from', 'tracker:project/timetable')
