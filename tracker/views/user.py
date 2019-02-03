@@ -18,6 +18,7 @@ from tracker.models import TimeRecord, Project, Setting
 def reports(request):
     return render(request, 'tracker/user/reports.html')
 
+
 @login_required
 def monthly_distribution(request, from_date=None, to_date=None):
     from_date = from_date or request.GET.get('from', None)
@@ -37,7 +38,6 @@ def monthly_distribution(request, from_date=None, to_date=None):
         .select_related('project')
 
     projects = Project.objects.filter(id__in=time_records.values_list('project', flat=True).distinct())
-    print(projects)
 
     matrix = [{
         'project': project,

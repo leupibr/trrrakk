@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, timedelta
 
 import pytz
 from django.contrib.auth.decorators import login_required
@@ -9,7 +9,7 @@ from django.utils.translation import activate as tl_activate
 from django_tables2 import RequestConfig
 
 from tracker.forms import TimeRecordForm
-from tracker.models import Organization, Project, Setting
+from tracker.models import Organization, Project, Setting, TimeRecord
 from tracker.tables import TimeRecordTable, RecentRecordTable
 from tracker.views.views import projects
 
@@ -97,12 +97,19 @@ def timetable(request, organization, project_id):
     time_records.order_by = request.session.get('timetable.sort') or '-end_time'
     RequestConfig(request, paginate={'per_page': 15}).configure(time_records)
 
+    current_time = TimeRecord.round_time(datetime.now(timezone), timedelta(minutes=setting.timestamp_rounding))
     form_add_record = TimeRecordForm(initial={
-        "start_time": datetime.now(timezone).strftime('%Y-%m-%dT%H:%M')
+        "start_time": current_time.strftime('%Y-%m-%dT%H:%M')
     })
     form_edit_record = TimeRecordForm(initial={
-        "end_time": datetime.now(timezone).strftime('%Y-%m-%dT%H:%M')
+        "end_time": current_time.strftime('%Y-%m-%dT%H:%M')
     })
+
+    step_in_seconds = setting.timestamp_rounding * 60
+    form_add_record.fields['start_time'].widget.attrs.update(step=step_in_seconds)
+    form_add_record.fields['end_time'].widget.attrs.update(step=step_in_seconds)
+    form_edit_record.fields['start_time'].widget.attrs.update(step=step_in_seconds)
+    form_edit_record.fields['end_time'].widget.attrs.update(step=step_in_seconds)
 
     context = dict(
         organization=organization,
