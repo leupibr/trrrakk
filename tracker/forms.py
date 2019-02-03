@@ -28,7 +28,10 @@ class SettingsForm(forms.ModelForm):
         empty_value=False,
         coerce=lambda v: str(v).lower() == 'true',
         widget=forms.Select(attrs={'class': 'form-control'}))
+    timestamp_rounding = forms.ChoiceField(
+        choices=Setting.ROUNDING_VALUES,
+        widget=forms.Select(attrs={'class': 'form-control'}))
 
     class Meta:
         model = Setting
-        fields = ('timezone', 'locale', 'duration_format', 'allow_parallel_tracking')
+        fields = ('timezone', 'locale', 'duration_format', 'timestamp_rounding', 'allow_parallel_tracking')
