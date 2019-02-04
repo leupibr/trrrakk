@@ -39,4 +39,6 @@ And finally run the application:
 ```
 
 ## Contributors
-* Bruno Leupi <bruno.leupi@gmail.com>
+
+* [leupibr](http://github.com/leupibr)
+* [tensorchief](https://github.com/tensorchief)
