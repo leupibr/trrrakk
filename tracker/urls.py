@@ -32,5 +32,6 @@ urlpatterns = [
     path(f'user/reports', views.user.reports, name='user/reports'),
     path(f'{reports_base}monthly_distribution', views.user.monthly_distribution, name='user/reports/monthly_distribution'),
     path(f'{reports_base}weekly_time', views.user.weekly_time, name='user/reports/weekly_time'),
+    path(f'{reports_base}weekly_report', views.user.weekly_report, name='user/reports/weekly_report'),
     path('settings', views.user.settings, name='user/settings'),
 ]

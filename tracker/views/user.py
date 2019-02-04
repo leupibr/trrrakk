@@ -153,6 +153,59 @@ def weekly_time(request, from_date=None, to_date=None):
 
     return render(request, 'tracker/user/weekly_time.html', context=context)
 
+@login_required
+def weekly_report(request, from_date=None, to_date=None):
+    from_date = from_date or request.GET.get('from', None)
+    to_date = to_date or request.GET.get('to', None)
+
+    setting, _ = Setting.objects.get_or_create(user=request.user)
+    tl_activate(setting.locale)
+
+    from_date = begin_of_week(from_date)
+    to_date = end_of_week(to_date)
+    dates = [from_date + timedelta(d) for d in range(7)]
+
+    time_records = TimeRecord.objects \
+        .filter(user=request.user) \
+        .filter(end_time__gte=from_date) \
+        .filter(end_time__lt=to_date + timedelta(days=1)) \
+        .select_related('project')
+
+    projects = Project.objects.filter(id__in=time_records.values_list('project', flat=True).distinct())
+
+    matrix = [{
+        'project': project,
+        'duration': [
+            format_matrix[setting.duration_format](get_duration_by_weekday(time_records, project, d)) for d in dates
+        ]}
+        for project in projects]
+    totals = build_sum_for_dates(setting, dates, matrix)
+
+    series = [{
+        'name': entry['project'].name,
+        'data': [format_data[setting.duration_format](r) for r in entry['duration']]
+    } for entry in matrix]
+
+    def fd(d, f='DATE_FORMAT'):
+        return formats.date_format(d, f)
+
+    title = f"Report Week {fd(from_date, 'W')} ({fd(from_date)} - {fd(to_date)})"
+
+    context = {
+        'setting': setting,
+        'show_identifier': any(p.identifier for p in projects),
+        'projects': projects,
+        'dates': dates,
+        'matrix': matrix,
+        'totals': totals,
+        'step': {
+            'backward': get_backward_step(from_date, timedelta(days=7)),
+            'forward': get_forward_step(from_date, timedelta(days=7), timedelta(days=13))
+        }
+    }
+
+    return render(request, 'tracker/user/weekly_report.html', context=context)
+
 
 @login_required
 def settings(request):
