@@ -106,4 +106,7 @@ venv.bak/
 # IDE
 .idea/
 
+# Temporary files
+*.swp
+
 trrrakk/media/
