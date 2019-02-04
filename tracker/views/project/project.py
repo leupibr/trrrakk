@@ -23,7 +23,7 @@ def create(request, organization):
 
     try:
         project_name = request.POST['project_name']
-        identifier = request.POST['identifier']
+        identifier = request.POST.get('identifier', '')
         if not project_name.strip():
             raise KeyError()
     except KeyError:
