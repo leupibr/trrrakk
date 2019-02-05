@@ -22,4 +22,3 @@ def get_avatar(backend, strategy, details, response, user=None, *args, **kwargs)
         ext = url.split('.')[-1].split('?')[0]
         profile.avatar.save('{0}.{1}'.format('avatar', ext), ContentFile(requests.get(url).content), save=False)
         profile.save()
-
