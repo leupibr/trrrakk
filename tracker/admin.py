@@ -4,6 +4,8 @@ from tracker.models import Organization, Setting
 from tracker.models import Project
 from tracker.models import Profile
 from tracker.models import TimeRecord
+from tracker.models import Template
+from tracker.models import TemplateRecord
 
 
 user_search_fields = ['user__username', 'user__first_name', 'user__last_name']
@@ -48,8 +50,21 @@ class TimeRecordAdmin(admin.ModelAdmin):
                     ['project__name', 'start_time', 'end_time']
 
 
+class TemplateAdmin(admin.ModelAdmin):
+    list_display = ('name', 'user')
+    list_filter = ['user']
+    search_fields = user_search_fields + ['name']
+
+
+class TemplateRecordAdmin(admin.ModelAdmin):
+    list_display = ('template', 'project', 'start_time', 'end_time')
+    list_filter = ['template', 'project']
+
+
 admin.site.register(Organization, OrganizationAdmin)
 admin.site.register(Profile, ProfileAdmin)
 admin.site.register(Project, ProjectAdmin)
 admin.site.register(Setting, SettingAdmin)
 admin.site.register(TimeRecord, TimeRecordAdmin)
+admin.site.register(Template, TemplateAdmin)
+admin.site.register(TemplateRecord, TemplateRecordAdmin)
