@@ -5,6 +5,8 @@ from tracker.models.organization import Organization
 from tracker.models.profile import Profile
 from tracker.models.project import Project
 from tracker.models.setting import Setting
+from tracker.models.template import Template
+from tracker.models.template_record import TemplateRecord
 from tracker.models.time_record import TimeRecord
 
 
