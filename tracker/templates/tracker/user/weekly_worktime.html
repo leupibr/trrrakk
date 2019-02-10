@@ -6,7 +6,7 @@
     {% breadcrumb_raw "Home" "tracker:index" %}
     {% breadcrumb_raw user.get_full_name "/user/profile" %}
     {% breadcrumb_raw "Reports" "tracker:user/reports" %}
-    {% breadcrumb_raw "Weekly Report" "tracker:user/reports/weekly_report" %}
+    {% breadcrumb_raw "Weekly Report" "tracker:user/reports/weekly_worktime" %}
 {% endblock %}
 
 {% block content %}
@@ -16,10 +16,10 @@
             {% if step.forward or step.backward %}
             <div class="btn-group btn-group-sm" role="group">
                 {% if step.backward %}
-                    <a href="{% url 'tracker:user/reports/weekly_report' %}?from={{ step.backward.from }}&to={{ step.backward.to }}"
+                    <a href="{% url 'tracker:user/reports/weekly_worktime' %}?from={{ step.backward.from }}&to={{ step.backward.to }}"
                        class="btn btn-primary"><i class="fa fa-step-backward"></i></a>
                 {% endif %}{% if step.forward %}
-                    <a href="{% url 'tracker:user/reports/weekly_report' %}?from={{ step.forward.from }}&to={{ step.forward.to }}"
+                    <a href="{% url 'tracker:user/reports/weekly_worktime' %}?from={{ step.forward.from }}&to={{ step.forward.to }}"
                         class="btn btn-primary"><i class="fa fa-step-forward"></i></a>
                 {% endif %}
             </div>
