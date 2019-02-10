@@ -1,5 +1,5 @@
 if ('Notification' in window) {
-    if (Notification.permission !== "granted") {
+    if (Notification.permission !== "granted" && Notification.permission !== "denied") {
         Notification.requestPermission();
     }
 }

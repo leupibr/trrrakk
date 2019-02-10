@@ -1,0 +1,83 @@
+{% extends "tracker/base.html" %}
+
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% breadcrumb_raw "Home" "tracker:index" %}
+    {% breadcrumb_raw user.get_full_name "/user/profile" %}
+    {% breadcrumb_raw "Reports" "tracker:user/reports" %}
+    {% breadcrumb_raw "Weekly Report" "tracker:user/reports/weekly_worktime" %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="btn-toolbar mb-2 justify-content-between" role="toolbar">
+            <div class="btn-group btn-group-sm" role="group"></div>
+            {% if step.forward or step.backward %}
+            <div class="btn-group btn-group-sm" role="group">
+                {% if step.backward %}
+                    <a href="{% url 'tracker:user/reports/weekly_worktime' %}?from={{ step.backward.from }}&to={{ step.backward.to }}"
+                       class="btn btn-primary"><i class="fa fa-step-backward"></i></a>
+                {% endif %}{% if step.forward %}
+                    <a href="{% url 'tracker:user/reports/weekly_worktime' %}?from={{ step.forward.from }}&to={{ step.forward.to }}"
+                        class="btn btn-primary"><i class="fa fa-step-forward"></i></a>
+                {% endif %}
+            </div>
+            {% endif %}
+        </div>
+
+        <div class="table-responsive">
+            <table class="table table-sm">
+                <thead>
+                    <tr>
+                    <th>Date</th>
+                    {% for date in dates %}
+                        <th class="text-right">{{ date|date:"SHORT_DATE_FORMAT" }}</th>
+                    {% endfor %}
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>Start time</th>
+                        {% for entry in start_dates %}
+                            <td class="text-right">{{ entry|time:"TIME_FORMAT" }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <th>End time</th>
+                        {% for entry in end_dates %}
+                            <td class="text-right">{{ entry|time:"TIME_FORMAT" }}</td>
+                        {% endfor %}
+                    </tr>
+                    <tr>
+                        <th>Total Break time</th>
+                        {% for entry in break_duration %}
+                            <td class="text-right">
+                                {% if setting.duration_format == 1 %}
+                                    {{ entry }}
+                                {% else %}
+                                    {{ entry|floatformat:2 }}
+                                {% endif %}
+                            </td>
+                        {% endfor %}
+                    </tr>
+                </tbody>
+                <tfoot>
+                    <tr>
+                        <th>Total Working time</th>
+                        {% for entry in totals %}
+                            <th class="text-right">
+                                {% if setting.duration_format == 1 %}
+                                    {{ entry }}
+                                {% else %}
+                                    {{ entry|floatformat:2 }}
+                                {% endif %}
+                            </th>
+                        {% endfor %}
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+{% endblock content %}
+

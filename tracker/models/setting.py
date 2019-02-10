@@ -29,3 +29,21 @@ class Setting(models.Model):
     )
 
     allow_parallel_tracking = BooleanField(default=False)
+
+    ROUNDING_1MIN = 1
+    ROUNDING_5MIN = 5
+    ROUNDING_10MIN = 10
+    ROUNDING_15MIN = 15
+    ROUNDING_30MIN = 30
+    ROUNDING_VALUES = [
+        (ROUNDING_1MIN, 'No rounding'),
+        (ROUNDING_5MIN, '5 minutes'),
+        (ROUNDING_10MIN, '10 minutes'),
+        (ROUNDING_15MIN, '15 minutes'),
+        (ROUNDING_30MIN, '30 minutes')
+    ]
+    timestamp_rounding = models.PositiveSmallIntegerField(
+        choices=ROUNDING_VALUES,
+        default=ROUNDING_1MIN
+    )
+

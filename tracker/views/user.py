@@ -18,6 +18,7 @@ from tracker.models import TimeRecord, Project, Setting
 def reports(request):
     return render(request, 'tracker/user/reports.html')
 
+
 @login_required
 def monthly_distribution(request, from_date=None, to_date=None):
     from_date = from_date or request.GET.get('from', None)
@@ -37,7 +38,6 @@ def monthly_distribution(request, from_date=None, to_date=None):
         .select_related('project')
 
     projects = Project.objects.filter(id__in=time_records.values_list('project', flat=True).distinct())
-    print(projects)
 
     matrix = [{
         'project': project,
@@ -152,6 +152,59 @@ def weekly_time(request, from_date=None, to_date=None):
     }
 
     return render(request, 'tracker/user/weekly_time.html', context=context)
+
+
+@login_required
+def weekly_worktime_report(request, from_date=None, to_date=None):
+    from_date = from_date or request.GET.get('from', None)
+    to_date = to_date or request.GET.get('to', None)
+
+    setting, _ = Setting.objects.get_or_create(user=request.user)
+    tl_activate(setting.locale)
+
+    from_date = begin_of_week(from_date)
+    to_date = end_of_week(to_date)
+    dates = [from_date + timedelta(d) for d in range(7)]
+
+    time_records = TimeRecord.objects \
+        .filter(user=request.user) \
+        .filter(end_time__gte=from_date) \
+        .filter(end_time__lt=to_date + timedelta(days=1)) \
+        .select_related('project')
+
+    filtered_records = [time_records.filter(end_time__week_day=weekday) for weekday in [2, 3, 4, 5, 6, 7, 1]]
+    min_start, max_end, break_time, totals = [], [], [], []
+    for day in filtered_records:
+        if not day:
+            min_start_time = None
+            max_end_time = None
+            work_duration = timedelta()
+            total_duration = timedelta()
+        else:
+            min_start_time = min([record.start_time for record in day])
+            max_end_time = max([record.end_time for record in day])
+            work_duration = sum([record.duration() for record in day], timedelta())
+            total_duration = max_end_time - min_start_time
+
+        min_start.append(min_start_time)
+        max_end.append(max_end_time)
+        totals.append(format_matrix[setting.duration_format](work_duration))
+        break_time.append(format_matrix[setting.duration_format](total_duration - work_duration))
+
+    context = {
+        'setting': setting,
+        'dates': dates,
+        'start_dates': min_start,
+        'end_dates': max_end,
+        'break_duration': break_time,
+        'totals': totals,
+        'step': {
+            'backward': get_backward_step(from_date, timedelta(days=7)),
+            'forward': get_forward_step(from_date, timedelta(days=7), timedelta(days=13))
+        }
+    }
+
+    return render(request, 'tracker/user/weekly_worktime.html', context=context)
 
 
 @login_required

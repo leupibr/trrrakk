@@ -1,3 +1,5 @@
+{% load static %}
+
 <nav class="navbar sticky-top navbar-expand-md navbar-light bg-light">
     <a href="/"><span class="navbar-brand"><i class="fa fa-paper-plane"></i></span></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar"
@@ -10,7 +12,11 @@
             {% if user.is_authenticated %}
                 <li class="nav-item">
                     <div class="avatar">
-                        <img src="{{ user.profile.avatar.url }}">
+                        {% if user.profile.avatar %}
+                            <img src="{{ user.profile.avatar.url }}">
+                        {% else %}
+                            <img src="{% static 'trrrakk/img/avatar.png' %}">
+                        {% endif %}
                     </div>
                 </li>
                 <li class="nav-item dropdown">
