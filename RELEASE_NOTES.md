@@ -1,3 +1,13 @@
+## trrrakk 0.6
+* New report which shows the weekly worktime and break duration
+* Introduces rounding of newly added time stamps
+* Update of social login buttons
+* Change of avatar concept
+* Fixes but where user is asked for notification permission multiple
+  times.
+* Fixes bug where creation of new projects was no longer possible
+* Cleanup of repository and community files
+
 ## trrrakk 0.5
 * Redesign of reports including additional monthly report
 * Fixes issue with invalid icons on policy page
