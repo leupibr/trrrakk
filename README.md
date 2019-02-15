@@ -1,4 +1,4 @@
-# trrrakk
+# trrrakk ❤️
 Application for tracking personal working hours.
 
 ## Installation
