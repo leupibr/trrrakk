@@ -1,0 +1,54 @@
+{% extends "tracker/base.html" %}
+
+{% load django_bootstrap_breadcrumbs %}
+
+{% block breadcrumbs %}
+    {% breadcrumb_raw "Home" "tracker:index" %}
+    {% breadcrumb_raw user.get_full_name "/user/profile" %}
+    {% breadcrumb_raw "Account" "tracker:/user/account" %}
+{% endblock %}
+
+{% block content %}
+    <div class="container">
+        <div class="row justify-content-md-center mb-2">
+            <div class="card p-3 col-md-6 shadow">
+                <form class="form" method="post" action="{% url 'tracker:user/account/change_password' %}">
+                    {% csrf_token %}
+
+                    {% for field in change_password_form %}
+                        <div class="form-group">
+                            <label for="{{ field.id_for_label }}">{{ field.label }}{% if field.field.required %}*{% endif %}</label>
+                            {{ field }}
+                            {% if field.help_text %}
+                                <small class="form-text text-muted">{{ field.help_text|safe }}</small>
+                            {% endif %}
+                        </div>
+                    {% endfor %}
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="row justify-content-md-center">
+            <div class="card p-3 col-md-6 shadow">
+                <div class="alert alert-light" role="alert">
+                    <h4 class="alert-heading">Warning</h4>
+                    <p>
+                        Please use a password only as a last resort. Even if <em>trrrakk</em> hashes and salts your password,
+                        stores it in an encrypted database and only uses secure communication channels (https), it is
+                        still more save not storing a password at all.
+                    </p>
+                    <p>
+                        The login mechanism with Google-OAuth2 or Github-OAuth2 doesn't require to store any
+                        password on <em>trrrakk</em>. Instead it delegates the responsibility to the big players
+                        and trusts their security standards.
+                    </p>
+                </div>
+                <form class="form" method="post" action="{% url 'tracker:user/account/clear_password' %}">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">Clear Password</button>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}

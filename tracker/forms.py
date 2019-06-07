@@ -35,3 +35,10 @@ class SettingsForm(forms.ModelForm):
     class Meta:
         model = Setting
         fields = ('timezone', 'locale', 'duration_format', 'timestamp_rounding', 'allow_parallel_tracking')
+
+
+class ChangePasswordForm(forms.Form):
+    password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}),
+                               help_text='Password must be at least 8 characters long and must contain'
+                                         ' at least one letter and one number')
+    confirm_password = forms.CharField(widget=forms.PasswordInput(attrs={'class': 'form-control'}))
