@@ -6,11 +6,11 @@ from typing import Union
 import pytz
 from django.contrib import messages
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.utils import formats
 from django.utils.translation import activate as tl_activate
 
-from tracker.forms import SettingsForm
+from tracker.forms import SettingsForm, ChangePasswordForm
 from tracker.models import TimeRecord, Project, Setting
 
 
@@ -220,6 +220,59 @@ def settings(request):
         form = SettingsForm(instance=actual)
 
     return render(request, 'tracker/user/settings.html', context={'form': form})
+
+
+@login_required
+def account(request):
+    return render(request, 'tracker/user/account.html', context={
+        'change_password_form': ChangePasswordForm()
+    })
+
+
+@login_required
+def change_password(request):
+    if request.method != 'POST':
+        messages.error(request, 'Invalid request method')
+        return redirect('tracker:user/account')
+
+    password = request.POST['password']
+    confirmation = request.POST['confirm_password']
+
+    if password != confirmation:
+        messages.error(request, 'Passwords do not match')
+        return redirect('tracker:user/account')
+
+    min_len = 8
+    if len(password) < min_len:
+        messages.error(request, f'Passwords must be at least {min_len} characters long')
+        return redirect('tracker:user/account')
+
+    if not any(char.isdigit() for char in password):
+        messages.error(request, 'Password must contain at least 1 digit.')
+        return redirect('tracker:user/account')
+
+    if not any(char.isalpha() for char in password):
+        messages.error(request, 'Password must contain at least 1 letter.')
+        return redirect('tracker:user/account')
+
+    request.user.set_password(password)
+    request.user.save()
+
+    messages.success(request, 'Password successfully changed')
+    return redirect('tracker:user/account')
+
+
+@login_required
+def clear_password(request):
+    if request.method != 'POST':
+        messages.error(request, 'Invalid request method')
+        return redirect('tracker:user/account')
+
+    request.user.set_unusable_password()
+    request.user.save()
+
+    messages.success(request, 'Password successfully cleared')
+    return redirect('tracker:user/account')
 
 
 def build_sum_for_dates(setting, dates, matrix):

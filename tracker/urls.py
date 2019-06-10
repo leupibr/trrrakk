@@ -33,5 +33,9 @@ urlpatterns = [
     path(f'{reports_base}monthly_distribution', views.user.monthly_distribution, name='user/reports/monthly_distribution'),
     path(f'{reports_base}weekly_time', views.user.weekly_time, name='user/reports/weekly_time'),
     path(f'{reports_base}weekly_worktime', views.user.weekly_worktime_report, name='user/reports/weekly_worktime'),
+
     path('settings', views.user.settings, name='user/settings'),
+    path('account', views.user.account, name='user/account'),
+    path('account/change_password', views.user.change_password, name='user/account/change_password'),
+    path('account/clear_password', views.user.clear_password, name='user/account/clear_password'),
 ]
