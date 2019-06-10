@@ -1,3 +1,8 @@
+## trrrakk 0.7
+* Rename reports for better clarity
+* Implement and configure Github as social authentication source
+* Add Interface for changing password
+
 ## trrrakk 0.6
 * New report which shows the weekly worktime and break duration
 * Introduces rounding of newly added time stamps
