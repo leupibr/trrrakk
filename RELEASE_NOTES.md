@@ -1,3 +1,6 @@
+## trrrakk 0.7.1
+* Update dependencies
+
 ## trrrakk 0.7
 * Rename reports for better clarity
 * Implement and configure Github as social authentication source
