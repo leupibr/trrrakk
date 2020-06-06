@@ -14,14 +14,13 @@ django-heroku = "*"
 django-tables2 = "*"
 django-timezone-field = "*"
 gunicorn = "*"
+markdown2 = "*"
 pillow = "*"
 psycopg2-binary = "*"
 setuptools-scm = "*"
 social-auth-app-django = "*"
 whitenoise = "*"
-markdown2 = "*"
 
 [dev-packages]
-
-[requires]
-python_version = "3.6"
+#[requires]
+#python_version = "3.6"
